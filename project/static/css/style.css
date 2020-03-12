@@ -1,0 +1,134 @@
+header {
+    height: 600px;
+    margin-bottom:90px
+}
+
+header .text{
+    width: 40%;
+    position: relative;
+    top: 27%;
+    left: 5%;
+    border-radius: 10px;
+    font-size: 25px;
+    color: #ebebeb;
+    font-weight: bold;
+    padding: 10px;
+    background-color: rgba(44, 44, 44, 0.7);
+  }
+  header .text h6{
+    margin-bottom:18px;
+  }
+  .btn-success
+  {
+      padding: 6px !important;
+      border-radius: 10px;
+      outline: none;
+  }
+ a:hover
+  {
+        text-decoration:none;
+  }
+.gallary
+{
+    width: 100%;
+    overflow: hidden;
+    margin-bottom:60px;
+}
+.gallary .item
+{
+    width: 32%;
+    float: left;
+    position: relative;
+    margin-left: 1.333%;
+    overflow: hidden;
+    margin-bottom: 10px;
+    transition: all 2s ease-in-out;
+    display: inline-block
+
+}
+.gallary .item .over
+{
+    position: absolute;
+    top: 10px;
+    height: 100%;
+    left: 10px;
+    width: 100%;
+    background-color: rgba(34, 34, 44, 0.7);
+    display: none;
+    overflow: hidden;
+    transform: scale(1.2);
+}
+.gallary .item .over a{
+    position:absolute;
+    top: 43%;
+    left: 37%;
+}
+@media (max-width:767px)
+{
+    .gallary .item .over a
+    {
+        left : 20%;
+        font-size:13px
+    }
+}
+@media (min-width:768px) and (max-width:991px)
+{
+    .gallary .item .over a
+    {
+        left : 25%;
+
+    }
+
+}
+.gallary .item:hover .over
+{
+    display: inline-block;
+
+}
+
+.gallary .item img
+{
+    width: 100%;
+    height: 300px;
+    transition: all 2s ease-in-out;
+    transition: transform 3s
+}
+.gallary .item:hover img
+{
+    transform: scale(1.2);
+}
+@media (max-width:767px)
+{
+    .gallary .item img
+    {
+        height: 200px;
+    }
+}
+.cat_search nav{
+    width:40%;
+    display:inline-block;
+    position: absolute;
+    right: 15%;
+    top:16%;
+}
+@media (max-width:767px)
+{
+    .cat_search nav
+    {
+        top:32%;
+    }
+}
+@media (min-width:768px) and (max-width:1199px)
+{
+    .cat_search nav
+    {
+        top:25%;
+    }
+}
+
+.bf
+{
+    background:#343a40;
+    color:#ccc;
+    overflow: hidden;
+}
