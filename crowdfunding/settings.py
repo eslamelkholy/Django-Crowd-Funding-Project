@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Add My Project Component Here
+    'project',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -113,6 +115,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Picute Section 
+# is for server path to store files in the computer.
+# Here is The Directory in which Server stores the Images
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'books/static/images') 
+
+# is the reference URL for browser to access the files over Http.
+MEDIA_URL = 'books/static/images/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
