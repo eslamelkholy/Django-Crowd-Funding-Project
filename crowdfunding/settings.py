@@ -121,10 +121,10 @@ USE_TZ = True
 # Picute Section 
 # is for server path to store files in the computer.
 # Here is The Directory in which Server stores the Images
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'books/static/images') 
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'project/static/image') 
 
 # is the reference URL for browser to access the files over Http.
-MEDIA_URL = 'books/static/images/'
+MEDIA_URL = 'project/static/image/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

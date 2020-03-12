@@ -1,0 +1,74 @@
+{% extends "layout/layout.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <h2 style="text-align: center;margin-top: 10px;margin-bottom: 10px;color: firebrick;">Add Your Own Project</h2>
+    <form class="col-8 offset-2" method="POST" enctype="multipart/form-data" >
+        <!-- is for protection against Cross Site Request Forgeries. -->
+        {% csrf_token %} 
+        <div class="form-group">
+            <label for="exampleInputEmail1">Projecgt Title</label>
+            <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="Enter Your Project Title">
+            {% if form.errors.title %}
+            <span style="font-weight: bold;color: tomato;">* Please Enter a Valid Project Title</span>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Project Details</label>
+            <input type="text" name="details" class="form-control" id="exampleInputPassword1" placeholder="Enter Your Project Details">
+            {% if form.errors.details %}
+            <span style="font-weight: bold;color: tomato;">* Please Enter a Valid Project Details</span>
+            {% endif %}
+          </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Select Your Project Category</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="category">
+              {% for category in categories %}
+                <option value="{{category.cat_id}}">{{ category.cat_name }}</option>
+              {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Project Total Target</label>
+            <input type="number" name="total_target" class="form-control" id="exampleInputPassword1" placeholder="Enter Your Project Target">
+            {% if form.errors.total_target %}
+            <span style="font-weight: bold;color: tomato;">* Please Enter a Valid Target</span>
+            {% endif %}
+        </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Project Start Date</label>
+            <input type="date" name="start_date" class="form-control" id="exampleInputPassword1">
+            {% if form.errors.start_date %}
+            <span style="font-weight: bold;color: tomato;">* Please Select Start Date</span>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Project End Date</label>
+            <input type="date" name="end_date" class="form-control" id="exampleInputPassword1">
+            {% if form.errors.end_date %}
+            <span style="font-weight: bold;color: tomato;">* Please Select End Date</span>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Enter your Project #Tags</label>
+            <input type="text" name="tags" class="form-control" id="exampleInputPassword1" placeholder="Enter Your Project Details">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Enter your Pictures</label>
+            <input type="file" name="project_images" class="form-control" id="exampleInputPassword1" multiple>
+            {% if form.errors.project_images %}
+            <span style="font-weight: bold;color: tomato;">* Please Upload A Valid Picture</span>
+            {% endif %}
+          </div>
+        <input type="submit" value="Add Project" class="btn btn-success">
+        {% if messages %}
+                {% for message in messages %}
+                    <div class="p-3 mb-2 bg-info text-white" style="margin-top: 20px; border-radius: 5%;text-align: center;">{{message}}</div>
+                    {{ messages.0.type }}
+                {% endfor %}
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}
