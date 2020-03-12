@@ -9,3 +9,5 @@ from django.contrib import messages
 #Add Project 
 def addproject(request):
     return HttpResponse("Hello")
+def project(request):
+    return render(request, "projects/projectHome.html")
