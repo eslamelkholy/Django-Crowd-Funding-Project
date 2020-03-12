@@ -21,7 +21,7 @@ from project import views as project_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('addproject/',project_views.addproject)
+    path('addproject',project_views.addproject)
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
