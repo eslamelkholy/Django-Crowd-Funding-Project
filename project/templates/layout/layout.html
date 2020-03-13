@@ -7,12 +7,12 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>{% block title %}{{ section.title }}{% endblock %}</title>
          <!-- css import for bootstrap  -->
-
-        {% block style %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'css/font-awesome.css'%}" >
         <link rel="stylesheet" href="{% static 'css/subtle-slideshow.css'%}" >
         <link rel="stylesheet" href="{% static 'css/style.css'%}" >
+        {% block style %}
+            
         {% endblock %}
 
         
@@ -29,7 +29,7 @@
     <!-- Footer -->
 <footer class="page-footer font-small special-color-dark bf mt-5">
     <!-- Footer Elements -->
-    <div class="container">
+    <div class="footer">
 
         <h3 class="text-center">copyRight &copy; by ITI Mansoura 2020 </h3>
     </div>

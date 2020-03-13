@@ -22,6 +22,7 @@ from project import views as project_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('addproject',project_views.addproject),
+    path('project/<int:id>',project_views.listProject),
     path('project',project_views.project)
 ]
 if settings.DEBUG:

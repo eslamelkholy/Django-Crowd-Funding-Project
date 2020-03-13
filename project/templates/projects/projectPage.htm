@@ -1,0 +1,68 @@
+{% extends "layout/layout.html" %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/userProject.css'%}" >            
+{% endblock %}
+{% block content %}
+{% include "layout/userHeader.htm" %}
+
+<div class="container">
+    <div class="row">
+        <div >
+            <h3 class="title">Django CrowdFunding Project For OpenSource Track</h3>
+            <p  class="lead header">This Project Related To Opensource Track To Build a Kickstart Project Using Django Technology
+                    Which is the Most Powerful To Build a web Application Let's Play With Python
+            </p>
+        </div>
+        
+    </div>
+</div>
+<div class="row postDetails">
+    <div class="col-6 offset-1 ">
+        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+              <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{% static 'image/2_Pc4d7Hd.jpg'%}" class="d-block w-100 sliderImg" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="{% static 'image/2_Pc4d7Hd.jpg'%}" class="d-block w-100 sliderImg" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="{% static 'image/2_Pc4d7Hd.jpg'%}" class="d-block w-100 sliderImg" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <div class="col-4 content">
+        <div>
+            <p class="projectInfo">Project Target : 20000$</p>
+            <p class="projectInfo">Current Amout : 100$</p>
+            <p class="projectInfo">Category : Software</p>
+            <p class="projectInfo">Start Date : 2020-3-12</p>
+            <p class="projectInfo">End Date : 2020-3-20</p>
+                <a class="btn btn-success donate">Donate Now</a>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

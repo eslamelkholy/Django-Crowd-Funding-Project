@@ -1,0 +1,33 @@
+.container{
+    text-align: center;
+    margin-top: 30px;
+}
+.lead{
+    margin-top: 15px;
+    font-size: 18px;
+}
+.content{
+    margin-left: 50px;
+}
+.postDetails
+{
+    margin-top: 40px;
+}
+.sliderImg{
+    height: 500px;
+    width: 400px;
+}
+.projectInfo{
+    color: #009E74;
+    font-size: 22px;
+    font-weight: bold;
+    margin-left: 10px;
+
+}
+.donate{
+    width: 90%;
+    margin-left: 20px;
+    margin-top: 40px;
+    color:white !important;
+    font-size: 22px;
+}

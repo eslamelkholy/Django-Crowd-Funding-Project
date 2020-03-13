@@ -8,7 +8,12 @@ from .forms import ProjectForm
 from .models import Project,Images
 from category.models import Category
 
-#Add Project 
+# List Specified Project 
+def listProject(request,id):
+    return render(request,"projects/projectPage.htm")
+
+
+# Add Project
 def addproject(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST,request.FILES)
