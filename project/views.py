@@ -10,7 +10,11 @@ from category.models import Category
 
 # List Specified Project 
 def listProject(request,id):
-    return render(request,"projects/projectPage.htm")
+    user_project = Project.objects.filter(p_id = int(id)).first()
+    if user_project:
+        return render(request,"projects/projectPage.htm",{"project" : user_project})
+    else:
+        return HttpResponse("404 Not Found")
 
 
 # Add Project

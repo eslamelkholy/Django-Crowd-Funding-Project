@@ -9,10 +9,8 @@
 <div class="container">
     <div class="row">
         <div >
-            <h3 class="title">Django CrowdFunding Project For OpenSource Track</h3>
-            <p  class="lead header">This Project Related To Opensource Track To Build a Kickstart Project Using Django Technology
-                    Which is the Most Powerful To Build a web Application Let's Play With Python
-            </p>
+            <h3 class="title">{{project.title}}</h3>
+            <p  class="lead header">{{project.details}} </p>
         </div>
         
     </div>
@@ -55,11 +53,11 @@
     <div class="col-4 content">
         <div>
             <a href="" class="btn btn-danger reportProject" >Report Project</a>
-            <p class="projectInfo">Project Target : 20000$</p>
-            <p class="projectInfo">Current Amout : 100$</p>
-            <p class="projectInfo">Category : Software</p>
-            <p class="projectInfo">Start Date : 2020-3-12</p>
-            <p class="projectInfo">End Date : 2020-3-20</p>
+            <p class="projectInfo">Project Target : {{project.total_target}}$</p>
+            <p class="projectInfo">Current Amout : {{project.current_amount}}$</p>
+            <p class="projectInfo">Category : {{project.category.cat_name}}</p>
+            <p class="projectInfo">Start Date : {{project.start_date}}</p>
+            <p class="projectInfo">End Date : {{project.end_date}}</p>
                 <a class="btn btn-success donate">Donate Now</a>
 
         </div>
