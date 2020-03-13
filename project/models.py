@@ -22,8 +22,14 @@ class Images(models.Model):
 
 
 # Donation Model
-
 class Donation(models.Model):
     donate_id = models.AutoField(primary_key=True)
     donate_amount = models.IntegerField()
+    proejct = models.ForeignKey("Project",on_delete=models.CASCADE,null=True)
+
+
+# Repor Project Model
+class Report(models.Model):
+    report_id = models.AutoField(primary_key=True)
+    report_content = models.CharField(max_length=255)
     proejct = models.ForeignKey("Project",on_delete=models.CASCADE,null=True)
