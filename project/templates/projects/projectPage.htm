@@ -54,6 +54,7 @@
     </div>
     <div class="col-4 content">
         <div>
+            <a href="" class="btn btn-danger reportProject" >Report Project</a>
             <p class="projectInfo">Project Target : 20000$</p>
             <p class="projectInfo">Current Amout : 100$</p>
             <p class="projectInfo">Category : Software</p>
@@ -62,6 +63,30 @@
                 <a class="btn btn-success donate">Donate Now</a>
 
         </div>
+    </div>
+</div>
+<div class="row postDetails">
+    <div class="userCommentsContainer offset-1 col-6">
+        <div class="userComment">
+            <img class="commentImg" src="{% static 'image/2_Pc4d7Hd.jpg'%}">
+            <p class="usernameComment" style="font-weight:bold ">Eslam Elkholy</p>
+            <div class="commentControllers">
+                <a href="" class="btn btn-danger commentEdit" >Report</a>
+            </div>
+            <p class="commentContent lead header">Hello This My Comment Content For This Project Hello This My Comment Content For This Project Hello This My Comment Content For This Project</p>
+        </div>
+    </div>
+     
+</div>
+<div class="row postDetails">
+    <div class="comment offset-1 col-6">
+    <form method="POST" class="col-10" action="../Controller/commentController.php">
+        <div class="form-group">
+            <input type="text" class="form-control col-12" name="comment" style="margin-left: -22px;" />
+        </div>
+        <input type="submit" value="Add Comment" name="addComment" class="btn btn-primary submitComment">
+        
+    </form>
     </div>
 </div>
 
