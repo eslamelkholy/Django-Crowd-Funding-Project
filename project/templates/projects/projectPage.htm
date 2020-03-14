@@ -52,14 +52,40 @@
     </div>
     <div class="col-4 content">
         <div>
-            <a href="" class="btn btn-danger reportProject" >Report Project</a>
+            <a href="" class="btn btn-danger reportProject"  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" >Report Project</a>
             <p class="projectInfo">Project Target : {{project.total_target}}$</p>
             <p class="projectInfo">Current Amout : {{project.current_amout}}$</p>
             <p class="projectInfo">Category : {{project.category.cat_name}}</p>
             <p class="projectInfo">Start Date : {{project.start_date}}</p>
             <p class="projectInfo">End Date : {{project.end_date}}</p>
                 <a class="btn btn-success donate">Donate Now</a>
-
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Report This Project</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        {% csrf_token %} 
+                        <p>Help us understand what's happening with this Project. How would you describe it?</p>
+                        <div class="form-group">
+                          <label for="report_text" class="col-form-label">Message:</label>
+                          <textarea name="report" class="form-control" id="report_text"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input class="btn btn-primary" type="submit" id="projectReport" value="Send Report" name="project_report">
+                          </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -90,53 +116,77 @@
 <!-- Add Comment On Specified Project -->
 <div class="row postDetails">
     <div class="comment offset-1 col-6">
-    <form class="col-10" id="addNewComment" method="POST">
+    <form class="col-10" >
         {% csrf_token %} 
         <div class="form-group">
             <input type="text" class="form-control col-12" name="commentContent" style="margin-left: -22px;" />
         </div>
-        <input type="submit" value="Add Comment" name="addComment" class="btn btn-primary submitComment">
+        <input type="submit" id="addNewComment" value="Add Comment" name="addComment" class="btn btn-primary submitComment">
     </form>
     </div>
 </div>
 {% endblock %}
 {% block js %}
-
     <script type="text/javascript">
-        $(document).on('click','#addNewComment',function(e){
-            // To Prevent Page Refresh
-            e.preventDefault();
-            $.ajax({
-                type : "POST",
-                url : 'http://localhost:8000/project/addcomment',
-                data:{
-                    project_id : '{{project.p_id}}',
-                    user_id : "1",
-                    comment_content : $("input[name='commentContent']").val(),
-                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-                },
-                success:function(data)
-                {
-                    $("input[name='commentContent']").val("")
-                    let object = JSON.parse(data["data"]);
-                    let fields = object[0]["fields"];
-                    let commentBody = fields.comment_body;
-                    let username = data.username;
-                    let user_img = data.user_img
-                    var html = '<div class="userCommentsContainer" style="width: 100%;">'+
-                                    '<div class="userComment">'+
-                                        '<img class="commentImg" src="{% static '/image/'%}'+user_img+'">'+
-                                        '<p class="usernameComment" style="font-weight:bold ">'+username+'</p>'+
-                                        '<div class="commentControllers">'+
-                                            '<a href="" class="btn btn-danger commentEdit" >Report</a>'+
-                                        '</div>'+
-                                        '<p class="commentContent lead header">'+commentBody+'</p>'+
+    //Add Comment Using Ajax With Django
+    $(document).on('click','#addNewComment',function(e){
+        // To Prevent Page Refresh
+        e.preventDefault();
+        $.ajax({
+            type : "POST",
+            url : 'http://localhost:8000/project/addcomment',
+            data:{
+                project_id : '{{project.p_id}}',
+                user_id : "1",
+                comment_content : $("input[name='commentContent']").val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data)
+            {
+                $("input[name='commentContent']").val("")
+                let object = JSON.parse(data["data"]);
+                let fields = object[0]["fields"];
+                let commentBody = fields.comment_body;
+                let username = data.username;
+                let user_img = data.user_img
+                var html = '<div class="userCommentsContainer" style="width: 100%;">'+
+                                '<div class="userComment">'+
+                                    '<img class="commentImg" src="{% static '/image/'%}'+user_img+'">'+
+                                    '<p class="usernameComment" style="font-weight:bold ">'+username+'</p>'+
+                                    '<div class="commentControllers">'+
+                                        '<a href="" class="btn btn-danger commentEdit" >Report</a>'+
                                     '</div>'+
-                                '</div>';
-                    $("#PostContainer").append(html);
-                }
-            })
-        });
+                                    '<p class="commentContent lead header">'+commentBody+'</p>'+
+                                '</div>'+
+                            '</div>';
+                $("#PostContainer").append(html);
+            }
+        })
+    });
+    // Add Project Report Using Ajax
+    $(document).on("click","#projectReport",function(e){
+        e.preventDefault();
+        $.ajax({
+            type : "POST",
+            url : 'http://localhost:8000/project/report',
+            data:{
+                project_id : '{{project.p_id}}',
+                user_id : "1",
+                report_text : $("#report_text").val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data)
+            {
+                var html = '<p style="color: #009E74;font-weight: bold;">'+
+                                'Thank You For Your Report We Will Review It Soon'+
+                            '</p>';
+                $(".modal-body").append(html);
+                setTimeout(function() {
+                    $('#exampleModal').modal('hide');
+                }, 2000);
+            }
+        })
+    });
     </script>
 
 {% endblock %}

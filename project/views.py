@@ -1,14 +1,14 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponseRedirect,HttpResponse
+from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 # Add Project Form Validation
 from .forms import ProjectForm
-from .models import Project,Images
+from .models import Project,Images,Report
 from category.models import Category
 from comments.models import Comments
-
+from user.models import User
 # List Specified Project 
 def listProject(request,id):
     user_project = Project.objects.filter(p_id = int(id)).first()
@@ -25,7 +25,6 @@ def addproject(request):
         form = ProjectForm(request.POST,request.FILES)
 
         if form.is_valid():
-            
             new_project = Project()
             new_project.title = request.POST['title']
             new_project.details = request.POST['details']
@@ -54,6 +53,17 @@ def addproject(request):
         context = {"categories" : categories}
         return render(request, "projects/addproject.htm",context)
 
+
+# Report Project Handler
+def reportProject(request):
+    if request.is_ajax and request.method == 'POST':
+        if request.POST['report_text']:
+            newReport = Report()
+            newReport.report_content = request.POST['report_text']
+            newReport.user = User.objects.get(u_id = int(request.POST['user_id']))
+            newReport.proejct = Project.objects.get(p_id = int(request.POST['project_id']))
+            newReport.save()
+            return HttpResponse("Done")
 
 #Project Home Page
 def project(request):

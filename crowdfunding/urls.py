@@ -25,7 +25,8 @@ urlpatterns = [
     path('addproject',project_views.addproject),
     path('project/<int:id>',project_views.listProject),
     path('project',project_views.project),
-    path('project/addcomment',comment_views.addComment)
+    path('project/addcomment',comment_views.addComment),
+    path('project/report',project_views.reportProject),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

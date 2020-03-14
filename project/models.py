@@ -33,3 +33,4 @@ class Report(models.Model):
     report_id = models.AutoField(primary_key=True)
     report_content = models.CharField(max_length=255)
     proejct = models.ForeignKey("Project",on_delete=models.CASCADE,null=True)
+    user = models.ForeignKey("user.User",on_delete=models.CASCADE,null=True)
