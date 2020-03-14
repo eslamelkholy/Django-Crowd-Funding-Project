@@ -54,7 +54,7 @@
         <div>
             <a href="" class="btn btn-danger reportProject" >Report Project</a>
             <p class="projectInfo">Project Target : {{project.total_target}}$</p>
-            <p class="projectInfo">Current Amout : {{project.current_amount}}$</p>
+            <p class="projectInfo">Current Amout : {{project.current_amout}}$</p>
             <p class="projectInfo">Category : {{project.category.cat_name}}</p>
             <p class="projectInfo">Start Date : {{project.start_date}}</p>
             <p class="projectInfo">End Date : {{project.end_date}}</p>
@@ -63,29 +63,80 @@
         </div>
     </div>
 </div>
-<div class="row postDetails">
-    <div class="userCommentsContainer offset-1 col-6">
-        <div class="userComment">
-            <img class="commentImg" src="{% static 'image/2_Pc4d7Hd.jpg'%}">
-            <p class="usernameComment" style="font-weight:bold ">Eslam Elkholy</p>
-            <div class="commentControllers">
-                <a href="" class="btn btn-danger commentEdit" >Report</a>
+<!-- Users Comments On The Project -->
+{% if comments %}
+    <div class="row postDetails offset-1 col-6" id="PostContainer">
+    {% for comment in comments %}
+            <div class="userCommentsContainer" style="width: 100%;">
+                <div class="userComment">
+                    <img class="commentImg" src="{% static 'image/'%}{{comment.user.user_img}}">
+                    <p class="usernameComment" style="font-weight:bold ">{{ comment.user.fname }} {{comment.user.lname}} </p>
+                    <div class="commentControllers">
+                        <a href="" class="btn btn-danger commentEdit" >Report</a>
+                    </div>
+                    <p class="commentContent lead header">{{comment.comment_body}}</p>
+                </div>
             </div>
-            <p class="commentContent lead header">Hello This My Comment Content For This Project Hello This My Comment Content For This Project Hello This My Comment Content For This Project</p>
+    {% endfor %}
+    </div>
+{% else %}
+    <div class="row postDetails offset-1 col-6">
+        <div class="userCommentsContainer" style="width: 100%;">
+            <p style="margin-left: 30px;margin-right: 30px;margin-top: 20px;font-weight: bold;">Be The First One To Add Comment On This Project</p>
         </div>
     </div>
-     
-</div>
+{% endif %}
+
+<!-- Add Comment On Specified Project -->
 <div class="row postDetails">
     <div class="comment offset-1 col-6">
-    <form method="POST" class="col-10" action="../Controller/commentController.php">
+    <form class="col-10" id="addNewComment" method="POST">
+        {% csrf_token %} 
         <div class="form-group">
-            <input type="text" class="form-control col-12" name="comment" style="margin-left: -22px;" />
+            <input type="text" class="form-control col-12" name="commentContent" style="margin-left: -22px;" />
         </div>
         <input type="submit" value="Add Comment" name="addComment" class="btn btn-primary submitComment">
-        
     </form>
     </div>
 </div>
+{% endblock %}
+{% block js %}
+
+    <script type="text/javascript">
+        $(document).on('click','#addNewComment',function(e){
+            // To Prevent Page Refresh
+            e.preventDefault();
+            $.ajax({
+                type : "POST",
+                url : 'http://localhost:8000/project/addcomment',
+                data:{
+                    project_id : '{{project.p_id}}',
+                    user_id : "1",
+                    comment_content : $("input[name='commentContent']").val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(data)
+                {
+                    $("input[name='commentContent']").val("")
+                    let object = JSON.parse(data["data"]);
+                    let fields = object[0]["fields"];
+                    let commentBody = fields.comment_body;
+                    let username = data.username;
+                    let user_img = data.user_img
+                    var html = '<div class="userCommentsContainer" style="width: 100%;">'+
+                                    '<div class="userComment">'+
+                                        '<img class="commentImg" src="{% static '/image/'%}'+user_img+'">'+
+                                        '<p class="usernameComment" style="font-weight:bold ">'+username+'</p>'+
+                                        '<div class="commentControllers">'+
+                                            '<a href="" class="btn btn-danger commentEdit" >Report</a>'+
+                                        '</div>'+
+                                        '<p class="commentContent lead header">'+commentBody+'</p>'+
+                                    '</div>'+
+                                '</div>';
+                    $("#PostContainer").append(html);
+                }
+            })
+        });
+    </script>
 
 {% endblock %}

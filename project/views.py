@@ -7,12 +7,14 @@ from django.contrib import messages
 from .forms import ProjectForm
 from .models import Project,Images
 from category.models import Category
+from comments.models import Comments
 
 # List Specified Project 
 def listProject(request,id):
     user_project = Project.objects.filter(p_id = int(id)).first()
+    comments = Comments.objects.filter(project_id = int(id))
     if user_project:
-        return render(request,"projects/projectPage.htm",{"project" : user_project})
+        return render(request,"projects/projectPage.htm",{"project" : user_project,"comments" : comments})
     else:
         return HttpResponse("404 Not Found")
 

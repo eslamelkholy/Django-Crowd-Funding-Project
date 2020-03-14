@@ -18,12 +18,14 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from project import views as project_views
+from comments import views as comment_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('addproject',project_views.addproject),
     path('project/<int:id>',project_views.listProject),
-    path('project',project_views.project)
+    path('project',project_views.project),
+    path('project/addcomment',comment_views.addComment)
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
