@@ -1,0 +1,36 @@
+{% extends "layout/layout.html" %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/userProject.css'%}" >            
+{% endblock %}
+{% block content %}
+{% include "layout/userHeader.htm" %}
+<div class="container">
+    <div class="row postDetails">
+        <div class="col-5 offset-1 ">
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Enter Total Amount</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="input-group-text fas fa fa-dollar"></i></div>
+                        </div>
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername2">
+                      </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-4 content">
+            <div>
+                <p class="projectInfo">Project Title : {{project.title}}</p>
+                <p class="projectInfo">Project Target : {{project.total_target}}$</p>
+                <p class="projectInfo">Current Amout : {{project.current_amout}}$</p>
+                <p class="projectInfo">Category : {{project.category.cat_name}}</p>
+                <p class="projectInfo">Start Date : {{project.start_date}}</p>
+                <p class="projectInfo">End Date : {{project.end_date}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

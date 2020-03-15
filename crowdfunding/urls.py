@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from project import views as project_views
@@ -28,6 +28,7 @@ urlpatterns = [
     path('project/report',project_views.reportProject),
     path('project/addcomment',comment_views.addComment),
     path('project/report_comment',comment_views.reportComment),
+    path('project/<str:title>', project_views.donate_project),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

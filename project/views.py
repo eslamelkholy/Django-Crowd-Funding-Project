@@ -69,6 +69,16 @@ def reportProject(request):
             return JsonResponse({"error":"Error"})
 
 
-#Project Home Page
+# Project Home Page
 def project(request):
     return render(request, "projects/projectHome.html")
+
+
+# Project Donation
+def donate_project(request,title):
+    project_title = " ".join(title.split("-"))
+    user_project = Project.objects.filter(title = project_title).first()
+    if user_project:
+        return render(request,"projects/donateProject.htm",{"project" : user_project})
+    else:
+        return HttpResponse("404 Not Found")

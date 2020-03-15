@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row">
         <div >
-            <h3 class="title">{{project.title}}</h3>
+            <h3 class="title" id="projectTitle">{{project.title}}</h3>
             <p  class="lead header">{{project.details}} </p>
         </div>
         
@@ -58,7 +58,7 @@
             <p class="projectInfo">Category : {{project.category.cat_name}}</p>
             <p class="projectInfo">Start Date : {{project.start_date}}</p>
             <p class="projectInfo">End Date : {{project.end_date}}</p>
-                <a class="btn btn-success donate">Donate Now</a>
+                <a class="btn btn-success donate" href="/project/{{ project.title.split|join:'-' }}">Donate Now</a>
             <!-- Report Project Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
