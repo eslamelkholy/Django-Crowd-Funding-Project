@@ -59,7 +59,7 @@
             <p class="projectInfo">Start Date : {{project.start_date}}</p>
             <p class="projectInfo">End Date : {{project.end_date}}</p>
                 <a class="btn btn-success donate">Donate Now</a>
-            <!-- Modal -->
+            <!-- Report Project Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -74,7 +74,7 @@
                         {% csrf_token %} 
                         <p>Help us understand what's happening with this Project. How would you describe it?</p>
                         <div class="form-group">
-                          <label for="report_text" class="col-form-label">Message:</label>
+                          <label for="report_text" class="col-form-label">Report:</label>
                           <textarea name="report" class="form-control" id="report_text"></textarea>
                         </div>
                         <div class="modal-footer">
@@ -98,12 +98,40 @@
                     <img class="commentImg" src="{% static 'image/'%}{{comment.user.user_img}}">
                     <p class="usernameComment" style="font-weight:bold ">{{ comment.user.fname }} {{comment.user.lname}} </p>
                     <div class="commentControllers">
-                        <a href="" class="btn btn-danger commentEdit" >Report</a>
+                        <a style="color: white;" class="btn btn-danger commentEdit" href="?comment_id={{comment.comment_id}}" data-toggle="modal" data-target="#reportCommentModal">Report</a>
                     </div>
                     <p class="commentContent lead header">{{comment.comment_body}}</p>
                 </div>
             </div>
     {% endfor %}
+    </div>
+    <!-- Report Comment Modal -->
+    <div class="modal fade" id="reportCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Report This Comment</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="CommentModalBody">
+              <form>
+                {% csrf_token %} 
+                <p>Help us understand what's happening with this Comment. How would you describe it?</p>
+                <div class="form-group">
+                  <label for="report_text" class="col-form-label">Report:</label>
+                  <textarea name="reportComment" class="form-control" id="report_comment"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a class="btn btn-primary" id="commentReport">Send Report</a>
+                    <!-- <input class="btn btn-primary" type="submit" id="commentReport" value="Send Report" name="comment_report"> -->
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
     </div>
 {% else %}
     <div class="row postDetails offset-1 col-6">
@@ -130,7 +158,6 @@
     <script type="text/javascript">
     //Add Comment Using Ajax With Django
     $(document).on('click','#addNewComment',function(e){
-        // To Prevent Page Refresh
         e.preventDefault();
         $.ajax({
             type : "POST",
@@ -163,7 +190,37 @@
             }
         })
     });
-    // Add Project Report Using Ajax
+    // Set Comment Id For Send Report Button
+    $(document).on("click",".commentEdit",function(e){
+        $("#commentReport").attr("href",$(this).attr('href'));
+    });
+    // Comment Report Using Ajax
+    $(document).on("click","#commentReport",function(e){
+        let comment_id = $(this).attr('href').split("=")[1];
+        e.preventDefault();
+        $.ajax({
+            type : "POST",
+            url : "http://localhost:8000/project/report_comment",
+            data : {
+                comment_id : comment_id,
+                report_content : $("#report_comment").val(),
+                user_id : "1",
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success(data)
+            {
+                $("#report_comment").val("");
+                var html = '<p style="color: #009E74;font-weight: bold;">'+
+                                'Thank You For Your Comment Report We Will Review It Soon'+
+                            '</p>';
+                $("#CommentModalBody").append(html);
+                setTimeout(function() {
+                    $('#reportCommentModal').modal('hide');
+                }, 1300);
+            }
+        })
+    });
+    // Project Report Using Ajax
     $(document).on("click","#projectReport",function(e){
         e.preventDefault();
         $.ajax({
@@ -177,16 +234,16 @@
             },
             success:function(data)
             {
+                $("#report_text").val("");
                 var html = '<p style="color: #009E74;font-weight: bold;">'+
                                 'Thank You For Your Report We Will Review It Soon'+
                             '</p>';
                 $(".modal-body").append(html);
                 setTimeout(function() {
                     $('#exampleModal').modal('hide');
-                }, 2000);
+                }, 1300);
             }
         })
     });
     </script>
-
 {% endblock %}

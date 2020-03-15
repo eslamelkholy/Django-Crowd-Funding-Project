@@ -23,7 +23,6 @@ def listProject(request,id):
 def addproject(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST,request.FILES)
-
         if form.is_valid():
             new_project = Project()
             new_project.title = request.POST['title']
@@ -32,6 +31,8 @@ def addproject(request):
             new_project.start_date = request.POST['start_date']
             new_project.end_date = request.POST['end_date']
             new_project.tags = request.POST['tags']
+            new_project.current_amout = "0"
+            new_project.user = User.objects.get(u_id = 1)
             new_project.category = Category.objects.get(cat_id = int(request.POST['category']))
             new_project.save()
             # MultiPle Image Section
@@ -63,7 +64,10 @@ def reportProject(request):
             newReport.user = User.objects.get(u_id = int(request.POST['user_id']))
             newReport.proejct = Project.objects.get(p_id = int(request.POST['project_id']))
             newReport.save()
-            return HttpResponse("Done")
+            return JsonResponse({"done":"Done"})
+        else:
+            return JsonResponse({"error":"Error"})
+
 
 #Project Home Page
 def project(request):

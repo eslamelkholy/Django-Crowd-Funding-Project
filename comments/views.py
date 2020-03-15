@@ -5,11 +5,11 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 from django.core import serializers
 # Add Project Form Validation
-from .models import Comments
+from .models import Comments,ReportComment
 from user.models import User
 from project.models import Project
 
-
+# Add Comment
 def addComment(request):
     if request.is_ajax and request.method == 'POST':
         if request.POST['comment_content'] :
@@ -23,3 +23,16 @@ def addComment(request):
         else:
             return JsonResponse({"error": "Please Fill The Comment"}, status=400)
 
+
+# Report Specified Comment
+def reportComment(request):
+    if request.is_ajax and request.method == 'POST':
+        if request.POST['report_content']:
+            new_report = ReportComment()
+            new_report.report_content = request.POST['report_content']
+            new_report.comment = Comments.objects.get(comment_id = int(request.POST['comment_id']))
+            new_report.user = User.objects.get(u_id = int(request.POST['user_id']))
+            new_report.save()
+            return JsonResponse({"done" : "Done"})
+        else:
+            return JsonResponse({"error" : "Error"})
