@@ -88,3 +88,28 @@ def donate_project(request,title):
         return render(request,"projects/donateProject.htm",{"project" : user_project})
     else:
         return HttpResponse("404 Not Found")
+
+
+def rate_project(request):
+    if request.method== 'POST':
+        p_id=int(request['project_id'])
+        u_id=int(request['user_id'])
+        rate=int(request['rate'])
+        print(p_id,u_id,rate)
+        rate_record=Rating.objects.filter(project_id=p_id,user_id=u_id).update(rate=rate)
+        if  rate_record:
+            return JsonResponse({"done": "done"})
+        else:
+            try:
+                Rating.objects.create(
+                    project_id=Project.objects.get(p_id=p_id),
+                    user_id=User.objects.get(u_id=u_id),
+                    rate=rate
+                )
+            except:
+                return JsonResponse({"error":"error"})
+            else:
+                return JsonResponse({"done": "done"})
+
+
+

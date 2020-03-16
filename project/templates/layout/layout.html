@@ -11,6 +11,12 @@
         <link rel="stylesheet" href="{% static 'css/font-awesome.css'%}" >
         <link rel="stylesheet" href="{% static 'css/subtle-slideshow.css'%}" >
         <link rel="stylesheet" href="{% static 'css/style.css'%}" >
+        <!-- js import for bootstrap  -->
+    <script src="{% static 'js/JQuery-3.3.1.min.js'%}"></script>
+    <script src="{% static 'js/popper.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'js/jquery.subtle-slideshow.js'%}"></script>
+    <script src="{% static 'js/project.js'%}"></script>
         {% block style %}
             
         {% endblock %}
@@ -33,12 +39,7 @@
 
         <h3 class="text-center">copyRight &copy; by ITI Mansoura 2020 </h3>
     </div>
-            <!-- js import for bootstrap  -->
-    <script src="{% static 'js/JQuery-3.3.1.min.js'%}"></script>
-    <script src="{% static 'js/popper.js'%}"></script>
-    <script src="{% static 'js/bootstrap.min.js'%}"></script>
-    <script src="{% static 'js/jquery.subtle-slideshow.js'%}"></script>
-    <script src="{% static 'js/project.js'%}"></script>
+
     {% block js %}
         
     {% endblock %}

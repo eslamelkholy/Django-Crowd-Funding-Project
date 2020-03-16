@@ -39,6 +39,9 @@ class Report(models.Model):
 
 # Rating Model
 class Rating(models.Model):
+    class Meta:
+         unique_together = (('project_id', 'user_id'),)
+
     project_id = models.ForeignKey("Project", on_delete=models.CASCADE, null=False)
     user_id = models.ForeignKey("user.User", on_delete=models.CASCADE, null=False)
     rate = models.IntegerField(choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)], null=False)
