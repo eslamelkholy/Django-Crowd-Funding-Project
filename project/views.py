@@ -10,6 +10,8 @@ from .models import Project,Images,Report,Rating
 from category.models import Category
 from comments.models import Comments
 from user.models import User
+from django.views.decorators.csrf import csrf_exempt
+
 # List Specified Project
 def listProject(request,id):
     user_project = Project.objects.filter(p_id = int(id)).first()
@@ -88,7 +90,6 @@ def donate_project(request,title):
         return render(request,"projects/donateProject.htm",{"project" : user_project})
     else:
         return HttpResponse("404 Not Found")
-
 
 def rate_project(request):
     if request.method== 'POST':
