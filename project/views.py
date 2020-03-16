@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db.models import Avg
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
 from django.conf import settings
@@ -15,11 +16,21 @@ import stripe
 stripe.api_key = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
 
 # List Specified Project 
+from .models import Project,Images,Report,Rating
+from category.models import Category
+from comments.models import Comments
+from user.models import User
+# List Specified Project
 def listProject(request,id):
     user_project = Project.objects.filter(p_id = int(id)).first()
     comments = Comments.objects.filter(project_id = int(id))
+    ratings= Rating.objects.filter(project_id=int(id))
+    ratings_counter={rate.rate: len(ratings.filter(rate=rate.rate)) for rate in ratings}
+    ratings_counter['count']=len(ratings)
+    ratings_counter['avg']=ratings.aggregate(Avg('rate'))['rate__avg']
     if user_project:
-        return render(request,"projects/projectPage.htm",{"project" : user_project,"comments" : comments})
+        return render(request,"projects/projectPage.htm",
+                {"project" : user_project,"comments" : comments, "ratings": ratings_counter})
     else:
         return HttpResponse("404 Not Found")
 
@@ -143,3 +154,26 @@ def payment_process(request):
             return redirect("project")
     else:
         return HttpResponse("404 Not Found")
+        return HttpResponse("404 Not Found")
+
+
+def rate_project(request):
+    if request.method== 'POST':
+        p_id=int(request['project_id'])
+        u_id=int(request['user_id'])
+        rate=int(request['rate'])
+        print(p_id,u_id,rate)
+        rate_record=Rating.objects.filter(project_id=p_id,user_id=u_id).update(rate=rate)
+        if  rate_record:
+            return JsonResponse({"done": "done"})
+        else:
+            try:
+                Rating.objects.create(
+                    project_id=Project.objects.get(p_id=p_id),
+                    user_id=User.objects.get(u_id=u_id),
+                    rate=rate
+                )
+            except:
+                return JsonResponse({"error":"error"})
+            else:
+                return JsonResponse({"done": "done"})
