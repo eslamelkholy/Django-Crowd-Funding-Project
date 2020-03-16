@@ -154,7 +154,6 @@ def payment_process(request):
             return redirect("project")
     else:
         return HttpResponse("404 Not Found")
-        return HttpResponse("404 Not Found")
 
 
 def rate_project(request):
