@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # Add My Project Component Here
+    'authentication',
     'project',
     'comments',
     'category',
