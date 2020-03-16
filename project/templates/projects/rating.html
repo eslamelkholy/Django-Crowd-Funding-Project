@@ -28,15 +28,15 @@
         event.preventDefault();
             $.ajax({
                 type:'POST',
-                url:'http://localhost:8000/project/rate',
+                url:'http://localhost:8000/rate/project',
                 data:{
                     user_id:"1",
                     project_id:{{project.p_id}},
                     rate:target_star.value,
                     csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
                 },
-                success:function(){
-                    console.log("success");
+                success:function(data){
+                    console.log(data);
                 },
                 error:function(){
                     console.log("error");

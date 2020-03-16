@@ -33,7 +33,7 @@ urlpatterns = [
     path('project/<str:title>', project_views.donate_project),
     path('payment/online',project_views.payment_process),
 
-    path('project/rate',project_views.rate_project),
+    path('rate/project',project_views.rate_project),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -158,12 +158,11 @@ def payment_process(request):
 
 def rate_project(request):
     if request.method== 'POST':
-        p_id=int(request['project_id'])
-        u_id=int(request['user_id'])
-        rate=int(request['rate'])
-        print(p_id,u_id,rate)
-        rate_record=Rating.objects.filter(project_id=p_id,user_id=u_id).update(rate=rate)
-        if  rate_record:
+        p_id=int(request.POST['project_id'])
+        u_id=int(request.POST['user_id'])
+        rate=int(request.POST['rate'])
+        rate_record=Rating.objects.filter(project_id_id=p_id,user_id_id=u_id).update(rate=rate)
+        if rate_record:
             return JsonResponse({"done": "done"})
         else:
             try:
@@ -175,4 +174,4 @@ def rate_project(request):
             except:
                 return JsonResponse({"error":"error"})
             else:
-                return JsonResponse({"done": "done"})
+                return JsonResponse({"RATE": "done"})
