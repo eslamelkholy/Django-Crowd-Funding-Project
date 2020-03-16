@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
 from django.conf import settings
@@ -5,10 +6,14 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 # Add Project Form Validation
 from .forms import ProjectForm
-from .models import Project,Images,Report
+from .models import Project,Images,Report,Payment
 from category.models import Category
 from comments.models import Comments
 from user.models import User
+# Stipe
+import stripe
+stripe.api_key = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
+
 # List Specified Project 
 def listProject(request,id):
     user_project = Project.objects.filter(p_id = int(id)).first()
@@ -74,11 +79,67 @@ def project(request):
     return render(request, "projects/projectHome.html")
 
 
-# Project Donation
+# Project Donation Amout Page
 def donate_project(request,title):
     project_title = " ".join(title.split("-"))
-    user_project = Project.objects.filter(title = project_title).first()
-    if user_project:
+    if request.method == "GET" and Project.objects.filter(title = project_title).first():
+        user_project = Project.objects.filter(title = project_title).first()
         return render(request,"projects/donateProject.htm",{"project" : user_project})
+    else:
+        return HttpResponse("404 Not Found Kid!!")
+
+# Payment View
+def payment_process(request):
+    if request.method == 'POST':
+        token = request.POST['stripeToken']
+        amount = int(request.POST['amout_of_payment']) * 100
+        # Stipe Api Call & Error Handling
+        try:
+            charge = stripe.Charge.create(
+                amount=amount, 
+                currency="usd",
+                source=token,
+            )
+            # Create the payment
+            payment = Payment()
+            payment.stripe_charge_id = charge['id']
+            payment.user = User.objects.get(u_id = 1)
+            payment.amout = amount
+            payment.project = Project.objects.filter(p_id = request.POST['project_id']).first()
+            payment.save()
+            messages.success(request,"Your Donation Was Finished Successfully !")
+            user_project = Project.objects.filter(p_id = request.POST['project_id']).first()
+            return render(request,"projects/donateProject.htm",{"project" : user_project})
+
+        except stripe.error.CardError as e:
+            # Since it's a decline, stripe.error.CardError will be caught
+            messages.error(request,f"{e.error.message}")
+            return redirect("project")
+        except stripe.error.RateLimitError as e:
+        # Too many requests made to the API too quickly
+            messages.error(request,"Rate Limit Error")
+            return redirect("project")
+        except stripe.error.InvalidRequestError as e:
+        # Invalid parameters were supplied to Stripe's API
+            messages.error(request,"Invalid Request Error")
+            return redirect("project")
+        except stripe.error.AuthenticationError as e:
+        # Authentication with Stripe's API failed
+        # (maybe you changed API keys recently)
+            messages.error(request,"Not Authentication")
+            return redirect("project")
+        except stripe.error.APIConnectionError as e:
+        # Network communication with Stripe failed
+            messages.error(request,"Network Error")
+            return redirect("project")
+        except stripe.error.StripeError as e:
+        # Display a very generic error to the user, and maybe send
+        # yourself an email
+            messages.error(request,"Something Went Wrong.. You Were not Charged Please Try Again")
+            return redirect("project")
+        except Exception as e:
+        # Send an email to ourselves
+            messages.error(request,"A Serious Error Occured We Have been Notified")
+            return redirect("project")
     else:
         return HttpResponse("404 Not Found")

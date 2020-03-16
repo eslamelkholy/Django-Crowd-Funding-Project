@@ -34,3 +34,15 @@ class Report(models.Model):
     report_content = models.CharField(max_length=255)
     proejct = models.ForeignKey("Project",on_delete=models.CASCADE,null=True)
     user = models.ForeignKey("user.User",on_delete=models.CASCADE,null=True)
+
+
+# Payment Class
+class Payment(models.Model):
+    stripe_charge_id = models.CharField(max_length=50)
+    amout = models.FloatField()
+    timestamp  = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey("user.User",on_delete=models.SET_NULL,null=True)
+    project = models.ForeignKey("Project",on_delete=models.SET_NULL,null=True)
+    def __str__(self):
+        return self.user.fname
+    
