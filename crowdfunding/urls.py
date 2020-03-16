@@ -31,12 +31,9 @@ urlpatterns = [
     path('project/addcomment',comment_views.addComment),
     path('project/report_comment',comment_views.reportComment),
     path('project/<str:title>', project_views.donate_project),
-<<<<<<< HEAD
     path('payment/online',project_views.payment_process),
 
-=======
     path('project/rate',project_views.rate_project),
->>>>>>> 6b8c9782685225b4b2b78f2a07d05928434e5d25
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
