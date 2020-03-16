@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
 from django.conf import settings
@@ -5,16 +6,21 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 # Add Project Form Validation
 from .forms import ProjectForm
-from .models import Project,Images,Report
+from .models import Project,Images,Report,Rating
 from category.models import Category
 from comments.models import Comments
 from user.models import User
-# List Specified Project 
+# List Specified Project
 def listProject(request,id):
     user_project = Project.objects.filter(p_id = int(id)).first()
     comments = Comments.objects.filter(project_id = int(id))
+    ratings= Rating.objects.filter(project_id=int(id))
+    ratings_counter={rate.rate: len(ratings.filter(rate=rate.rate)) for rate in ratings}
+    ratings_counter['count']=len(ratings)
+    ratings_counter['avg']=ratings.aggregate(Avg('rate'))['rate__avg']
     if user_project:
-        return render(request,"projects/projectPage.htm",{"project" : user_project,"comments" : comments})
+        return render(request,"projects/projectPage.htm",
+                {"project" : user_project,"comments" : comments, "ratings": ratings_counter})
     else:
         return HttpResponse("404 Not Found")
 

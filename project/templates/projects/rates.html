@@ -1,0 +1,99 @@
+{%load static%}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{%static 'css/rates.css'%}"/>
+
+
+<span class="heading">Project Rating</span>
+<span class="fa fa-star "></span>
+<span class="fa fa-star "></span>
+<span class="fa fa-star "></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+
+
+<p>{{ratings.avg}} average based on {{ratings.count}} reviews.</p>
+<hr style="border:3px solid #f1f1f1">
+
+
+
+<div class="row">
+  <div class="side">
+    <div>5 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-5" ></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>{{ratings.5|default:0}}</div>
+  </div>
+  <div class="side">
+    <div>4 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-4"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>{{ratings.4|default:0}}</div>
+  </div>
+  <div class="side">
+    <div>3 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-3"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>{{ratings.3|default:0}}</div>
+  </div>
+  <div class="side">
+    <div>2 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-2"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>{{ratings.2|default:0}}</div>
+  </div>
+  <div class="side">
+    <div>1 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-1"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>{{ratings.1|default:0}}</div>
+  </div>
+</div>
+
+<script>
+    let [c1,c2,c3,c4,c5]=[{{ratings.1|default:0}},{{ratings.2|default:0}},{{ratings.3|default:0}},
+    {{ratings.4|default:0}},{{ratings.5|default:0}}]
+    let count={{ratings.count}}
+    let avg={{ratings.avg}}
+    document.querySelector(".bar-5").setAttribute("style", `width:${c5*100/count}%`);
+    document.querySelector(".bar-4").setAttribute("style", `width:${c4*100/count}%`);
+    document.querySelector(".bar-3").setAttribute("style", `width:${c3*100/count}%`);
+    document.querySelector(".bar-2").setAttribute("style", `width:${c2*100/count}%`);
+    document.querySelector(".bar-1").setAttribute("style", `width:${c1*100/count}%`);
+
+    let stars=document.querySelectorAll(".fa-star")
+        stars.forEach((item,index)=>{
+        if(index<(avg-0.49)){
+          item.classList.add("checked");
+        }
+    })
+
+
+</script>
+
