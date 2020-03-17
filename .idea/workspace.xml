@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4fbd16e-0202-45f1-8a6f-8e30a2e9d665" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/project/migrations/0008_payment.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/migrations/0009_auto_20200316_2034.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/migrations/0010_merge_20200316_2341.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/static/css/paymentStyle.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/migrations/0011_donation_user.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/templates/projects/cancelProject.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdfunding/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/crowdfunding/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crowdfunding/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/crowdfunding/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/templates/layout/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/templates/layout/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/templates/projects/donateProject.htm" beforeDir="false" afterPath="$PROJECT_DIR$/project/templates/projects/donateProject.htm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/templates/projects/projectPage.htm" beforeDir="false" afterPath="$PROJECT_DIR$/project/templates/projects/projectPage.htm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/templates/projects/rating.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/templates/projects/rating.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/views.py" afterDir="false" />

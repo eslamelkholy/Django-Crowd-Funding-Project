@@ -27,6 +27,7 @@ class Donation(models.Model):
     donate_id = models.AutoField(primary_key=True)
     donate_amount = models.IntegerField()
     proejct = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE, null=True)
 
 
 # Repor Project Model

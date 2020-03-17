@@ -1,0 +1,83 @@
+
+
+<form method="POST" class="mt-5">
+    {%csrf_token%}
+<!-- Button trigger modal -->
+<input type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" value="Cancel">
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body bg-warning">
+        are you sure you want to cancel the event?
+      </div>
+      <div class="modal-footer bg-warning">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <input id="cancelBtn" type="submit" class="btn btn-danger" value="Yes" data-dismiss="modal">
+
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
+<input type="button" style="display:none;" id="notApprovedBtn" class="btn btn-danger" data-toggle="modal" data-target="#ModalCenter" >
+
+<div class="modal fade " id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered " role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title " id="ModalCenterTitle" >Refused</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body bg-danger text-light">
+        Your project has reached more than 25% of it's total target and can't be cancelled!
+      </div>
+      <div class="modal-footer bg-danger">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    $("#cancelBtn").on("click",function(event){
+        event.preventDefault();
+        $.ajax({
+            type:"POST",
+            url:'/cancel/project',
+            data:{
+                p_id:{{project.p_id}},
+                u_id:"1",
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data){
+                if(data['not_approved']){
+                    $("#notApprovedBtn").click();
+                }
+                if(data['done']){
+<!--                    $("#cancellingIndecation").append("<span class='badge badge-danger'>cancelled</span>");-->
+<!--                    $("#projectTitle").addClass("text-danger");-->
+<!--                    $(".projectInfo").addClass("text-danger");-->
+                        location.replace("/project");
+                }
+            },
+            error:function(data){
+                console.log("error",data);
+            }
+
+        });
+
+    })
+</script>
