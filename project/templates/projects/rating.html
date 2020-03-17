@@ -28,7 +28,7 @@
         event.preventDefault();
             $.ajax({
                 type:'POST',
-                url:'http://localhost:8000/rate/project',
+                url:'/rate/project',
                 data:{
                     user_id:"1",
                     project_id:{{project.p_id}},

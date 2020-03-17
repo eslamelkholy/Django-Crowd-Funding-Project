@@ -12,22 +12,31 @@ from category.models import Category
 from comments.models import Comments
 from user.models import User
 # Stipe
+<<<<<<< HEAD
 import stripe
 stripe.api_key = "sk_test_BfzJ6A79Q955Tt2DaVGrGKS900BMCGkffo"
+=======
+# import stripe
+# stripe.api_key = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
+>>>>>>> 3ad01f58631a50c455890a2dab719ad3fb62374a
 
 # List Specified Project 
 from .models import Project,Images,Report,Rating
 from category.models import Category
 from comments.models import Comments
 from user.models import User
+from django.views.decorators.csrf import csrf_exempt
+
 # List Specified Project
 def listProject(request,id):
     user_project = Project.objects.filter(p_id = int(id)).first()
     comments = Comments.objects.filter(project_id = int(id))
+
     ratings= Rating.objects.filter(project_id=int(id))
     ratings_counter={rate.rate: len(ratings.filter(rate=rate.rate)) for rate in ratings}
     ratings_counter['count']=len(ratings)
     ratings_counter['avg']=ratings.aggregate(Avg('rate'))['rate__avg']
+
     if user_project:
         return render(request,"projects/projectPage.htm",
                 {"project" : user_project,"comments" : comments, "ratings": ratings_counter})
@@ -156,7 +165,6 @@ def payment_process(request):
     else:
         return HttpResponse("404 Not Found")
 
-
 def rate_project(request):
     if request.method== 'POST':
         p_id=int(request.POST['project_id'])
@@ -164,7 +172,7 @@ def rate_project(request):
         rate=int(request.POST['rate'])
         rate_record=Rating.objects.filter(project_id_id=p_id,user_id_id=u_id).update(rate=rate)
         if rate_record:
-            return JsonResponse({"done": "done"})
+            return JsonResponse({"done": rate})
         else:
             try:
                 Rating.objects.create(
@@ -175,4 +183,27 @@ def rate_project(request):
             except:
                 return JsonResponse({"error":"error"})
             else:
-                return JsonResponse({"RATE": "done"})
+                return JsonResponse({"done":rate})
+
+
+def cancel_project(request):
+    print("reached function!!!!")
+    if request.method=="POST":
+        u_id=request.POST['u_id']
+        p_id=request.POST['p_id']
+        this_project=Project.objects.get(p_id=p_id)
+        if this_project:
+            current_donation=this_project.current_amout
+            total_target=this_project.total_target
+            percentage=current_donation/total_target
+            if percentage <0.25:
+                # this_project.delete()
+                return JsonResponse({"done":"done"})
+            else:
+                return JsonResponse({"not_approved":"not_approved"})
+        else:
+            return JsonResponse({"error"})
+
+
+
+
