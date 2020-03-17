@@ -1,8 +1,49 @@
-<form action="/login_register/signin/" method="post">
-	{% csrf_token %}
-	<input type="text" name="username" id="username">
-	<input type="password" name="password" id="password">
+<html>
+	<head>
+		<title>Login</title>
+		{%load static%}
+		<link rel="stylesheet" href="{% static 'css/bootstrap.css'%}" >
+		<link rel="stylesheet" href="{% static 'css/style.css'%}" >
 
-<button type="submit">Login</button>
+	</head>
+	<body>
+		
+		<div class="container">
+		<img id="logo" src="{% static 'image/1.jpg'%}" alt="logo"/>
+		<form action="/login_register/signin/" method="post">
+			{% csrf_token %}
+			<div class="form-group">
+			  <label for="exampleInputEmail1">User Name: </label>
+			  <input type="text" class="form-control"  name="username" id="username">
+			  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+			</div>
+			<div class="form-group">
+			  <label for="exampleInputPassword1">Password</label>
+			  <input type="password" class="form-control" name="password" id="password">
+			</div>
+			<!-- <div class="form-group form-check">
+			  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+			  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+			</div> -->
+			<button type="submit" class="btn btn-primary">Login</button>
+		  </form>
+		
+		
+<div class="row" id="social">
+	<div class="col-md-8 mx-auto social-container my-2 order-md-1">
+		<button class="btn btn-danger  mb-2">
+			<a href="#">Login with Instagram</a>
+		</button>
+		<button class="btn btn-primary mb-2">
+			<a href="{% url 'social:begin' 'facebook' %}">Login with Facebook
+			</a>
+		</button>
+		<button class="btn btn-info mb-2">
+			<a href="{% url 'social:begin' backend='linkedin-oauth2' %}">Login with LinkedIn</a>
+		</button>
+	</div>
+</div>
+</div>
 
-</form>
+</body>
+</html>
