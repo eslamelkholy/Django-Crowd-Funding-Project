@@ -12,13 +12,8 @@ from category.models import Category
 from comments.models import Comments
 from user.models import User
 # Stipe
-<<<<<<< HEAD
 import stripe
 stripe.api_key = "sk_test_BfzJ6A79Q955Tt2DaVGrGKS900BMCGkffo"
-=======
-# import stripe
-# stripe.api_key = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
->>>>>>> 3ad01f58631a50c455890a2dab719ad3fb62374a
 
 # List Specified Project 
 from .models import Project,Images,Report,Rating
