@@ -13,7 +13,7 @@ from comments.models import Comments
 from user.models import User
 # Stipe
 import stripe
-stripe.api_key = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
+stripe.api_key = "sk_test_BfzJ6A79Q955Tt2DaVGrGKS900BMCGkffo"
 
 # List Specified Project 
 from .models import Project,Images,Report,Rating
@@ -104,6 +104,8 @@ def payment_process(request):
     if request.method == 'POST':
         token = request.POST['stripeToken']
         amount = int(request.POST['amout_of_payment']) * 100
+        user_project = Project.objects.filter(p_id = request.POST['project_id']).first()
+        link = user_project.title.replace(" ","-")
         # Stipe Api Call & Error Handling
         try:
             charge = stripe.Charge.create(
@@ -119,39 +121,38 @@ def payment_process(request):
             payment.project = Project.objects.filter(p_id = request.POST['project_id']).first()
             payment.save()
             messages.success(request,"Your Donation Was Finished Successfully !")
-            user_project = Project.objects.filter(p_id = request.POST['project_id']).first()
             return render(request,"projects/donateProject.htm",{"project" : user_project})
 
         except stripe.error.CardError as e:
             # Since it's a decline, stripe.error.CardError will be caught
             messages.error(request,f"{e.error.message}")
-            return redirect("project")
+            return redirect(f"../project/{link}")
         except stripe.error.RateLimitError as e:
         # Too many requests made to the API too quickly
             messages.error(request,"Rate Limit Error")
-            return redirect("project")
+            return redirect(f"../project/{link}")
         except stripe.error.InvalidRequestError as e:
         # Invalid parameters were supplied to Stripe's API
             messages.error(request,"Invalid Request Error")
-            return redirect("project")
+            return redirect(f"../project/{link}")
         except stripe.error.AuthenticationError as e:
         # Authentication with Stripe's API failed
         # (maybe you changed API keys recently)
             messages.error(request,"Not Authentication")
-            return redirect("project")
+            return redirect(f"../project/{link}")
         except stripe.error.APIConnectionError as e:
         # Network communication with Stripe failed
             messages.error(request,"Network Error")
-            return redirect("project")
+            return redirect(f"../project/{link}")
         except stripe.error.StripeError as e:
         # Display a very generic error to the user, and maybe send
         # yourself an email
             messages.error(request,"Something Went Wrong.. You Were not Charged Please Try Again")
-            return redirect("project")
+            return redirect(f"../project/{link}")
         except Exception as e:
         # Send an email to ourselves
             messages.error(request,"A Serious Error Occured We Have been Notified")
-            return redirect("project")
+            return redirect(f"../project/{link}")
     else:
         return HttpResponse("404 Not Found")
 
