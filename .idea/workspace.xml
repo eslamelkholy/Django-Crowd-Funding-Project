@@ -2,7 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4fbd16e-0202-45f1-8a6f-8e30a2e9d665" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+<<<<<<< HEAD
+      <change afterPath="$PROJECT_DIR$/project/static/image/images/IMG20190914120109.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/static/image/images/user-profile-flat-icons_5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/static/image/images/user-profile-flat-icons_7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/static/image/images/user-profile-flat-icons_7_jxi1bE0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/static/image/images/user-profile-flat-icons_7_uFBF0I7.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/admin.py" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/authentication/static/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authentication/static/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authentication/static/image/1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/templates/auth/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/templates/auth/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdfunding/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/crowdfunding/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdfunding/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/crowdfunding/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/templates/layout/userHeader.htm" beforeDir="false" afterPath="$PROJECT_DIR$/project/templates/layout/userHeader.htm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/templates/projects/donateProject.htm" beforeDir="false" afterPath="$PROJECT_DIR$/project/templates/projects/donateProject.htm" afterDir="false" />
+>>>>>>> 99c0be2e2f1753b837d85032ddc30cb3294f662b
+>>>>>>> 83797d77ff6c478003dfe8a713ac2def7c445f5f
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

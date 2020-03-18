@@ -1,0 +1,38 @@
+{%load static%}
+
+<link rel="stylesheet" href="{% static 'css/similarProjects.css'%}" >
+
+
+<div id="carouselExampleIndicators" class="carousel slide carousel-fade mt-5" data-ride="carousel">
+
+  <div class="carousel-inner">
+      <div class="carousel-item active">
+      <img class="d-block w-100 " id="similarProjectsCover" src="{% static 'image/2_Pc4d7Hd.jpg'%}" alt="">
+    </div>
+      {%for i in similars%}
+    <div class="carousel-item">
+        <div class="card bg-secondary">
+          <img class="card-img-top similarProjectImg" src="{% static 'image/2_Pc4d7Hd.jpg'%}" alt="Card image cap">
+          <div class="card-body">
+            <strong class="card-title text-info">{{i.title}}</strong>
+            <p class="card-text text-dark">{{i.details}}</p>
+          </div>
+          <div class="card-body ">
+            <a href="/project/{{i.p_id}}" class="btn btn-primary" >GO</a>
+          </div>
+        </div>
+    </div>
+
+    {%endfor%}
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
