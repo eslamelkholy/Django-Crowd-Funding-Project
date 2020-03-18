@@ -1,11 +1,11 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from project.models import Project, Donation
 from user.models import User
 
 
 # Create your views here.
 def index(request):
-    u_data = User.objects.filter(pk=2)
+    u_data = User.objects.filter(u_id=2)
     context = {
         'u_data': u_data
     }
@@ -32,3 +32,8 @@ def donations(request):
         'd_data' : d_data,
     }
     return render(request, 'profiles/donations.html', context)
+
+
+def edit(request):
+    context ={}
+    return render(request, 'profiles/edit.html', context)
