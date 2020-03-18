@@ -79,8 +79,8 @@
 <script>
     let [c1,c2,c3,c4,c5]=[{{ratings.1|default:0}},{{ratings.2|default:0}},{{ratings.3|default:0}},
     {{ratings.4|default:0}},{{ratings.5|default:0}}]
-    let count={{ratings.count}}
-    let avg={{ratings.avg}}
+    let count={{ratings.count|default:0}}
+    let avg={{ratings.avg|default:0}}
     document.querySelector(".bar-5").setAttribute("style", `width:${c5*100/count}%`);
     document.querySelector(".bar-4").setAttribute("style", `width:${c4*100/count}%`);
     document.querySelector(".bar-3").setAttribute("style", `width:${c3*100/count}%`);

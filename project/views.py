@@ -22,19 +22,38 @@ from comments.models import Comments
 from user.models import User
 from django.views.decorators.csrf import csrf_exempt
 
-# List Specified Project
-def listProject(request,id):
-    user_project = Project.objects.filter(p_id = int(id)).first()
-    comments = Comments.objects.filter(project_id = int(id))
+# to get the similer projects baset on tags
+def get_similer_projects(id):
+    tags = [i for i in Project.objects.filter(p_id=id)[0].tags.split(" ")]
+    similer_projects = [Project.objects.filter(tags__contains=i).exclude(p_id=id) for i in tags]
+    similers = []
+    for i in similer_projects:
+        for j in i:
+            similers.append(j)
+    similers = list(set(similers))[:4]
+    return similers
 
+# to get the rates and avg-rate of a project
+def rate_projects(id):
     ratings= Rating.objects.filter(project_id=int(id))
     ratings_counter={rate.rate: len(ratings.filter(rate=rate.rate)) for rate in ratings}
     ratings_counter['count']=len(ratings)
     ratings_counter['avg']=ratings.aggregate(Avg('rate'))['rate__avg']
+    return ratings_counter
 
+# List Specified Project
+def listProject(request,id):
+    user_project = Project.objects.filter(p_id = int(id)).first()
+    comments = Comments.objects.filter(project_id = int(id))
+    # rating projects
+    ratings_counter=rate_projects(id)
+    #
+    # similar projects
+    similers=get_similer_projects(id)
+    #
     if user_project:
         return render(request,"projects/projectPage.htm",
-                {"project" : user_project,"comments" : comments, "ratings": ratings_counter})
+                {"project" : user_project,"comments" : comments, "ratings": ratings_counter,"similars":similers})
     else:
         return HttpResponse("404 Not Found")
 
