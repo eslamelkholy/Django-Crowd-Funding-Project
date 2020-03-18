@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4fbd16e-0202-45f1-8a6f-8e30a2e9d665" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/project/static/image/images/IMG20190914120109.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/static/image/images/user-profile-flat-icons_5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/static/image/images/user-profile-flat-icons_7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/static/image/images/user-profile-flat-icons_7_jxi1bE0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/static/image/images/user-profile-flat-icons_7_uFBF0I7.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/templates/projects/projectPage.htm" beforeDir="false" afterPath="$PROJECT_DIR$/project/templates/projects/projectPage.htm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/admin.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
