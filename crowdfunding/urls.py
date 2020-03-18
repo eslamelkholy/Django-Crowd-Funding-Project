@@ -39,5 +39,5 @@ urlpatterns = [
     path('rate/project',project_views.rate_project),
     path('cancel/project', project_views.cancel_project),
 ]
-if settings.DEBUG:
+if settings.DEBUG:يا 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
