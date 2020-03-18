@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/media/hadeer/New Volume/Open Source/python/project/Django-Crowd-Funding-Project/venv"
+set -gx VIRTUAL_ENV "/media/hadeer/New Volume/Open Source/python/project/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
