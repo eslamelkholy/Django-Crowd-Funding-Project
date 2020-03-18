@@ -25,6 +25,7 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login_register/',include(auth)),
+    path('profiles/', include('profiles.urls')),
     url('^api/v1/', include('social_django.urls', namespace='social')),
     path('addproject',project_views.addproject),
     path('project/<int:id>',project_views.listProject),

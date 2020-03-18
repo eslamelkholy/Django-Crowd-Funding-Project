@@ -1,0 +1,16 @@
+.similarProjectImg{
+    width:100%;
+    height:200px;
+}
+#similarProjectsCover{
+    width:100%;
+    height:400px;
+}
+.card{
+    width:100%;
+    height:400px;
+}
+
+.card-body{
+    text-align:center;
+}

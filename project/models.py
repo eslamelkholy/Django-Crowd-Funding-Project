@@ -26,7 +26,7 @@ class Images(models.Model):
 class Donation(models.Model):
     donate_id = models.AutoField(primary_key=True)
     donate_amount = models.IntegerField()
-    proejct = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
+    project = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
     user = models.ForeignKey("user.User", on_delete=models.CASCADE, null=True)
 
 
@@ -34,14 +34,14 @@ class Donation(models.Model):
 class Report(models.Model):
     report_id = models.AutoField(primary_key=True)
     report_content = models.CharField(max_length=255)
-    proejct = models.ForeignKey("Project",on_delete=models.CASCADE,null=True)
+    project = models.ForeignKey("Project",on_delete=models.CASCADE,null=True)
     user = models.ForeignKey("user.User",on_delete=models.CASCADE,null=True)
 
 
 # Payment Class
 class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)
-    amout = models.FloatField()
+    amount = models.FloatField()
     timestamp  = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey("user.User",on_delete=models.SET_NULL,null=True)
     project = models.ForeignKey("Project",on_delete=models.SET_NULL,null=True)
