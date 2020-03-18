@@ -24,6 +24,7 @@ import authentication.urls as auth
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login_register/',include(auth)),
+    path('profiles/', include('profiles.urls')),
     path('addproject',project_views.addproject),
     path('project/<int:id>',project_views.listProject),
     path('project',project_views.project),
