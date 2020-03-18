@@ -34,7 +34,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # Add My Project Component Here
+
     'profiles',
+    'social_django',
     'authentication',
     'project',
     'comments',
@@ -48,6 +50,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
 ]
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.linkedin.LinkedinOAuth2',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,6 +83,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends', # this
+                'social_django.context_processors.login_redirect', # and this
             ],
         },
     },
@@ -136,3 +148,8 @@ MEDIA_URL = 'project/static/image/'
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+SOCIAL_AUTH_FACEBOOK_KEY = '3232144076813539'        # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '1809b4d5a7fc5a1d3722f419c798d1ad'  # App Secret
+LOGIN_REDIRECT_URL = '/product'
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = '86iwnyqqrdwihb'
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = 'TtB09od64VeJeDqZ'

@@ -1,7 +1,6 @@
 {% extends "layout/layout.html" %}
 {% load static %}
 {% block style %}
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <style media="screen">
   body, html {
@@ -119,6 +118,7 @@
 {% endblock %}
 {% block content %}
 {% include "layout/userHeader.htm" %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet">
 <div class="container">
     <div class="row postDetails">
         <div class="col-6 ">
@@ -127,10 +127,10 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Enter Total Amount In Dollar</label>
                     <div class="input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text"><i class="input-group-text fas fa fa-dollar"></i></div>
+                        <div class="input-group-addon">
+                          <span class="input-group-text fas fa fa-dollar" id="basic-addon1"></span>
                         </div>
-                        <input style="height: 34px;font-size: 20px;" class="form-control" type="number" name="amout_of_payment" id="inlineFormInputGroupUsername2">
+                        <input style="height: 40px;font-size: 20px;" class="form-control" type="number" name="amout_of_payment" aria-describedby="basic-addon1" id="inlineFormInputGroupUsername2">
                       </div>
                 </div>
                 <div class="stripe-form-row" style="width: 100%;">
