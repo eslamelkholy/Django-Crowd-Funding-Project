@@ -2,10 +2,9 @@
   box-sizing: border-box;
 }
 
-body {
+.ratesDiv {
   font-family: Arial;
   margin: 0 auto; /* Center website */
-  max-width: 800px; /* Max width */
   padding: 20px;
 }
 
