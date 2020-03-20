@@ -87,13 +87,22 @@ class Signup(View):
             subject = 'Please Activate Your Account'
             # load a template like get_template() 
             # and calls its render() method immediately.
-            message = render_to_string('auth/activation_request.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-                # method will generate a hash value with user related data
-                'token': account_activation_token.make_token(user),
-            })
+            try:
+                message = render_to_string('auth/activation_request.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                    # method will generate a hash value with user related data
+                    'token': account_activation_token.make_token(user),
+                })
+            except AttributeError:
+                message = render_to_string('auth/activation_request.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': user.pk ,
+                    # method will generate a hash value with user related data
+                    'token': account_activation_token.make_token(user),
+                })
             user.email_user(subject, message)
             return HttpResponse('We have sent you an email, please confirm your email address to complete registration')
         else:
@@ -113,6 +122,6 @@ def activate(request, uidb64, token):
         login(request, user)
         return redirect('product')
     else:
-        return render(request, 'auth/account_activation_invalid.html')
+        return render(request, 'auth/success.html')
 def forgetPasswordView(self):
     return HttpResponse("forget password view")
