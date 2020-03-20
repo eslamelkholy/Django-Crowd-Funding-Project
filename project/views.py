@@ -29,6 +29,11 @@ def get_similer_projects(id):
     similers = []
     for i in similer_projects:
         for j in i:
+            try:
+                project_image="image/"+str(j.images_set.first().image_name)
+            except AttributeError:
+                project_image=""
+            j.image=project_image
             similers.append(j)
     similers = list(set(similers))[:4]
     return similers
@@ -43,19 +48,26 @@ def rate_projects(id):
     ratings_counter['thisRate']=user_rating
     return ratings_counter
 
+# get project pictures
+def get_project_images(id):
+    project_images=list(Images.objects.filter(project=Project.objects.get(p_id=id)).values_list("image_name"))
+    project_images=list(map(lambda tuple:tuple[0],project_images))
+    project_images=map(lambda image_name:"image/"+image_name,project_images)
+    return project_images
+
 # List Specified Project
 def listProject(request,id):
     user_project = Project.objects.filter(p_id = int(id)).first()
     comments = Comments.objects.filter(project_id = int(id))
     # rating projects
     ratings_counter=rate_projects(id)
-    #
     # similar projects
     similers=get_similer_projects(id)
-    #
+    #project images
+    project_images=get_project_images(id)
     if user_project:
         return render(request,"projects/projectPage.htm",
-                {"project" : user_project,"comments" : comments, "ratings": ratings_counter,"similars":similers})
+                {"project" : user_project,"comments" : comments,"images":project_images, "ratings": ratings_counter,"similars":similers})
     else:
         return HttpResponse("404 Not Found")
 

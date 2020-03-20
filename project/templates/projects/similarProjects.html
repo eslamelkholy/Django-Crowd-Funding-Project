@@ -11,7 +11,7 @@
       {%for i in similars%}
     <div class="carousel-item">
         <div class="card bg-secondary courouselCard">
-          <img class="card-img-top similarProjectImg" src="{% static 'image/2_Pc4d7Hd.jpg'%}" alt="Card image cap">
+          <img class="card-img-top similarProjectImg" src="{% static i.image%}" alt="Card image cap">
           <div class="card-body similerProjectsBody">
             <strong class="card-title projectTitle">{{i.title}}</strong>
             <p class="card-text text-dark">{{i.details}}</p>
