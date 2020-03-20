@@ -5,11 +5,9 @@
 <div id="carouselExampleIndicators" class="carousel slide carousel-fade mt-5 col-8 offset-2" data-ride="carousel">
 
   <div class="carousel-inner">
-      <div class="carousel-item active">
-      <img class="d-block w-100 " id="similarProjectsCover" src="{% static 'image/2_Pc4d7Hd.jpg'%}" alt="">
-    </div>
+
       {%for i in similars%}
-    <div class="carousel-item">
+    <div class="carousel-item similerProjectsSlider">
         <div class="card bg-secondary courouselCard">
           <img class="card-img-top similarProjectImg" src="{% static i.image%}" alt="Card image cap">
           <div class="card-body similerProjectsBody">
@@ -34,4 +32,6 @@
   </a>
 </div>
 
-
+<script>
+   $(".similerProjectsSlider:first").addClass("active");
+</script>

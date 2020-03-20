@@ -22,14 +22,9 @@
                 <div id="cancellingIndecation"></div>
                 <p class="lead header projectDetails">{{project.details}} </p>
             </div>
-            <div class="carousel-item active">
-                
-                <img src="{% static 'image/2_Pc4d7Hd.jpg'%}" class="d-block w-100 sliderImg" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                </div>
-            </div>
+
             {%for image in images%}
-            <div class="carousel-item">
+            <div class="carousel-item mainprojectSlider">
                 <img src="{%static image%}" class="d-block w-100 sliderImg" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                 </div>
@@ -272,5 +267,6 @@
             }
         })
     });
+    $(".mainprojectSlider:first").addClass("active");
 </script>
 {% endblock %}
