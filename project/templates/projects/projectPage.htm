@@ -115,7 +115,11 @@
     {% if comments %}
     <div class="row postDetails offset-3 col-6" id="PostContainer">
         {% for comment in comments %}
+<<<<<<< HEAD
         <div class="userCommentsContainer bg-light" style="width: 100%;">
+=======
+        <div class="userCommentsContainer" style="width: 100%;text-align: left;">
+>>>>>>> 2cdf8b3dcfe4e544210b4390b026a196a358144e
             <div class="userComment">
                 <img class="commentImg" src="{% static 'image/'%}{{comment.user.user_img}}">
                 <p class="usernameComment" style="font-weight:bold ">{{ comment.user.fname }} {{comment.user.lname}}
@@ -206,6 +210,7 @@
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
             success: function (data) {
+                console.log(data);
                 $("input[name='commentContent']").val("")
                 let object = JSON.parse(data["data"]);
                 let fields = object[0]["fields"];
