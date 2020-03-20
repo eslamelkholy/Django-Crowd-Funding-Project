@@ -21,6 +21,7 @@ from project import views as project_views
 from comments import views as comment_views
 import authentication.urls as auth
 from django.conf.urls import url
+import authentication.views as auth_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
