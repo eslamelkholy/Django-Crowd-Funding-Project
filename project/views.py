@@ -140,13 +140,13 @@ def donate_project(request,title):
 def payment_process(request):
     if request.method == 'POST':
         token = request.POST['stripeToken']
-        amount = int(request.POST['amout_of_payment']) * 100
+        amount = float(int(request.POST['amout_of_payment']) * 100)
         user_project = Project.objects.filter(p_id = request.POST['project_id']).first()
         link = user_project.title.replace(" ","-")
         # Stipe Api Call & Error Handling
         try:
             charge = stripe.Charge.create(
-                amount=amount, 
+                amount=int(amount),
                 currency="usd",
                 source=token,
             )
@@ -189,7 +189,7 @@ def payment_process(request):
         except Exception as e:
         # Send an email to ourselves
             messages.error(request,"A Serious Error Occured We Have been Notified")
-            return redirect(f"../project/{link}")
+            return HttpResponse(e)
     else:
         return HttpResponse("404 Not Found")
 
