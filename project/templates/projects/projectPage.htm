@@ -102,7 +102,7 @@
     {% if comments %}
     <div class="row postDetails offset-3 col-6" id="PostContainer">
         {% for comment in comments %}
-        <div class="userCommentsContainer bg-light" style="width: 100%;">
+        <div class="userCommentsContainer bg-light" style="width: 100%;text-align: left;">
             <div class="userComment">
                 <img class="commentImg" src="{% static 'image/'%}{{comment.user.user_img}}">
                 <p class="usernameComment" style="font-weight:bold ">{{ comment.user.fname }} {{comment.user.lname}}
@@ -200,12 +200,12 @@
                 let commentBody = fields.comment_body;
                 let username = data.username;
                 let user_img = data.user_img
-                var html = '<div class="userCommentsContainer" style="width: 100%;">' +
+                var html = '<div class="userCommentsContainer bg-light" style="width: 100%;text-align: left;">' +
                     '<div class="userComment">' +
-                    '<img class="commentImg" src="{% static ' / image / '%}' + user_img + '">' +
+                    '<img class="commentImg" src="{% static '/image/'%}'+user_img +'">' +
                     '<p class="usernameComment" style="font-weight:bold ">' + username + '</p>' +
                     '<div class="commentControllers">' +
-                    '<a href="" class="btn btn-danger commentEdit" >Report</a>' +
+                    '<a style="color: white;" class="btn btn-warning commentEdit" href="?comment_id='+data.c_id+'" data-target="#reportCommentModal"  data-toggle="modal" >Report</a>' +
                     '</div>' +
                     '<p class="commentContent lead header">' + commentBody + '</p>' +
                     '</div>' +
