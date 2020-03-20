@@ -141,7 +141,7 @@ def payment_process(request):
     if request.method == 'POST':
         token = request.POST['stripeToken']
         amount = float(int(request.POST['amout_of_payment']) * 100)
-        user_project = Project.objects.filter(p_id = request.POST['project_id']).first()
+        user_project = Project.objects.filter(p_id = int(request.POST['project_id'])).first()
         link = user_project.title.replace(" ","-")
         # Stipe Api Call & Error Handling
         try:
@@ -154,8 +154,8 @@ def payment_process(request):
             payment = Payment()
             payment.stripe_charge_id = charge['id']
             payment.user = User.objects.get(u_id = 1)
-            payment.amout = amount
-            payment.project = Project.objects.filter(p_id = request.POST['project_id']).first()
+            payment.amout = float(request.POST['amout_of_payment'])
+            payment.project = Project.objects.get(p_id = int(request.POST['project_id']))
             payment.save()
             messages.success(request,"Your Donation Was Finished Successfully !")
             return render(request,"projects/donateProject.htm",{"project" : user_project})
