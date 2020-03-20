@@ -2,7 +2,7 @@
 
 
 
-<div id="carouselExampleIndicators" class="carousel slide carousel-fade mt-5" data-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide carousel-fade mt-5 col-8 offset-2" data-ride="carousel">
 
   <div class="carousel-inner">
       <div class="carousel-item active">
@@ -10,14 +10,14 @@
     </div>
       {%for i in similars%}
     <div class="carousel-item">
-        <div class="card bg-secondary">
+        <div class="card bg-secondary courouselCard">
           <img class="card-img-top similarProjectImg" src="{% static 'image/2_Pc4d7Hd.jpg'%}" alt="Card image cap">
-          <div class="card-body">
-            <strong class="card-title text-info">{{i.title}}</strong>
+          <div class="card-body similerProjectsBody">
+            <strong class="card-title projectTitle">{{i.title}}</strong>
             <p class="card-text text-dark">{{i.details}}</p>
           </div>
-          <div class="card-body ">
-            <a href="/project/{{i.p_id}}" class="btn btn-primary" >GO</a>
+          <div class="card-body seeMoreBtn">
+            <a href="/project/{{i.p_id}}" class="btn btn-primary" >see more</a>
           </div>
         </div>
     </div>

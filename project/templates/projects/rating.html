@@ -17,6 +17,11 @@
 </form>
 
 <script>
+    let rateStars=document.querySelectorAll(".rating > input");
+    rateStars.forEach((star)=>{
+        if(Number(star.value)=={{ratings.thisRate}})
+            star.setAttribute("checked",true);
+    })
     let rate=$(".rating");
     let target_star;
     rate.on("change",function(event){

@@ -1,5 +1,5 @@
 body{
-    background-color: #eff4f6;;
+    background-color: #f9f9ff;
     font-weight: 400;
 }
 .container{
@@ -19,7 +19,7 @@ body{
     width: 100%;
 }
 .sliderImg{
-    height: 500px;
+    height: 800px;
     width: 400px;
 }
 .projectInfo{
@@ -27,14 +27,12 @@ body{
     font-size: 22px;
     font-weight: bold;
     margin-left: 10px;
-
+    display: inline-block;
 }
 .donate{
-    width: 90%;
-    margin-left: 20px;
-    /* margin-top: 80px; */
+    width: 40%;
     color:white !important;
-    font-size: 22px;
+    font-size: 30px;
 }
 .comment{
     margin-top: -20px;    
@@ -75,6 +73,7 @@ h4{
     border-radius: 5px;
     height: 100%;
     margin-top: 20px;
+    box-shadow: 2px 2px gray;
 }
 .commentEdit{
     margin-top: -35px;
@@ -102,8 +101,57 @@ h4{
 #detailsCard{
     display: flex;
     flex-direction: column;
+    flex-wrap:wrap;
     justify-content: center;
-    border: 2px solid gray;
-    border-radius: 20%;
-    box-shadow: 10px 10px gray;
+    background-color: black;
+}
+.contentData{
+    color:white;
+}
+#projectImagescarousel, #carouselExampleCaptions{
+    height:800px ;
+}
+.tag {
+    float: left;
+    position: absolute;
+    left: 8%;
+    top: 100px;
+    z-index: 1000;
+}    
+.projectTitle{
+    font-size: 55px;
+    text-transform: capitalize;
+    font-weight: 700;
+    margin-bottom: 22px;
+    line-height: 1.2;
+    color: #fff;
+}
+.projectDetails{
+    color: #eff4f6;
+    font-size: 30px;
+}
+#PostContainer{
+    background-color: black;
+}
+.ratesDiv{
+    width: 60%;
+    /* background-color: ; */
+}
+/* #cancelProjectBtn{
+    position: absolute;
+    top: 35%;
+    left:85%;
+    width: 200px;
+    height: 80px;
+    font-size: 25px;
+} */
+.contents{
+    display: inline-block;
+}
+
+#donateBtn{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    z-index: 10000;
 }

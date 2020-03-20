@@ -36,9 +36,11 @@ def get_similer_projects(id):
 # to get the rates and avg-rate of a project
 def rate_projects(id):
     ratings= Rating.objects.filter(project_id=int(id))
+    user_rating=ratings.get(user_id=1).rate
     ratings_counter={rate.rate: len(ratings.filter(rate=rate.rate)) for rate in ratings}
     ratings_counter['count']=len(ratings)
     ratings_counter['avg']=ratings.aggregate(Avg('rate'))['rate__avg']
+    ratings_counter['thisRate']=user_rating
     return ratings_counter
 
 # List Specified Project
