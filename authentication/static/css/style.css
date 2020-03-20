@@ -1,21 +1,37 @@
 
+body{
+	background-color: #2a7b5c;
+}
 #logo{
-height: 25%;
-width: 30%;
-border-radius: 50%;
-margin-left: 35%;
+    height: 25%;
+    width: 30%;
+    border-radius: 50%;
+    margin-left: 35%;
+    box-shadow: #e0b451bf 9px 9px 50px;
+    transform: scale(0.9);
+    transition: all 2s;
 }
 .container{
-margin-top: 10%;
+    margin-top: 5%;
 }
-
+body{
+	color: white;
+}
 a{
-    color: white;
+	color: white;
 
 }
 #social{
-    margin-left: 10%;
+    margin-left: 32%;
+    margin-top: 2%;
 }
 button[type="submit"]{
-    margin-left: 45%;
+	width:100%
+}
+.parent{
+    width: 20%;
+    margin-left: 37%;
+}
+a:hover{
+    color:greenyellow
 }

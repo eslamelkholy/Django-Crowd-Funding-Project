@@ -13,8 +13,9 @@
 		<form action="/login_register/signin/" method="post">
 			{% csrf_token %}
 			<div class="form-group">
-			  <label for="exampleInputEmail1">User Name: </label>
+			  <label>User Name: </label>
 			  <input type="text" class="form-control"  name="username" id="username">
+			 
 			  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
 			</div>
 			<div class="form-group">
@@ -25,15 +26,16 @@
 			  <input type="checkbox" class="form-check-input" id="exampleCheck1">
 			  <label class="form-check-label" for="exampleCheck1">Check me out</label>
 			</div> -->
-			<button type="submit" class="btn btn-primary">Login</button>
+			<div class="row parent">
+			<button type="submit" class="btn btn-success">Login</button>
+		</div>
 		  </form>
 		
 		
-<div class="row" id="social">
-	<div class="col-md-8 mx-auto social-container my-2 order-md-1">
-		<button class="btn btn-danger  mb-2">
-			<a href="#">Login with Instagram</a>
-		</button>
+
+	<!-- <div class="col-md-8 mx-auto social-container my-2 order-md-1"> -->
+		<a href="/login_register/forgetpassword">Forget Password?</a>
+		<div id="social">
 		<button class="btn btn-primary mb-2">
 			<a href="{% url 'social:begin' 'facebook' %}">Login with Facebook
 			</a>
@@ -41,7 +43,6 @@
 		<button class="btn btn-info mb-2">
 			<a href="{% url 'social:begin' backend='linkedin-oauth2' %}">Login with LinkedIn</a>
 		</button>
-	</div>
 </div>
 </div>
 

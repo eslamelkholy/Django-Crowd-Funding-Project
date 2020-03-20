@@ -16,8 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import authentication.views as auth_view
+from django.conf.urls import url
 
 urlpatterns = [
     path('login/',auth_view.loginView,name="login"),
-    path('signin/',auth_view.signin)
+    path('signin/',auth_view.signin),
+    # path('register/',auth_view.registerView,name="register"),
+    path('register/', auth_view.Signup.as_view(), name='register'),
+    path('signup/',auth_view.Signup.as_view()),
+    path('forgetpassword/',auth_view.forgetPasswordView),
+    # path('activate/<str:uid>/<str:token>', auth_view.activate, name='activate'),
+    # url(r'^account_activation_sent/$', auth_view.account_activation_sent, name='account_activation_sent'),
+    # url(r'activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    #     auth_view.activate, name='activate'),
+
+
 ]
