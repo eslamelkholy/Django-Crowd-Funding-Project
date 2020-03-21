@@ -19,7 +19,7 @@ def addComment(request):
             newComment.project = Project.objects.get(p_id = int(request.POST['project_id']))
             newComment.save()
             ser_instance = serializers.serialize('json', [ newComment])
-            return  JsonResponse({"data": ser_instance,"username":newComment.user.fname + ' ' + newComment.user.lname,"user_img": str(newComment.user.user_img)}, status=200)
+            return  JsonResponse({"data": ser_instance,"username":newComment.user.fname + ' ' + newComment.user.lname,"c_id" : newComment.comment_id,"user_img": str(newComment.user.user_img)}, status=200)
         else:
             return JsonResponse({"error": "Please Fill The Comment"}, status=400)
 
@@ -33,6 +33,6 @@ def reportComment(request):
             new_report.comment = Comments.objects.get(comment_id = int(request.POST['comment_id']))
             new_report.user = User.objects.get(u_id = int(request.POST['user_id']))
             new_report.save()
-            return JsonResponse({"done" : "Done"})
+            return JsonResponse({"id" : "Done"})
         else:
             return JsonResponse({"error" : "Error"})
