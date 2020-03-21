@@ -24,6 +24,7 @@ urlpatterns = [
     # path('register/',auth_view.registerView,name="register"),
     path('register/', auth_view.Signup.as_view(), name='register'),
     path('signup/',auth_view.Signup.as_view()),
+    path('logout/',auth_view.logout_user),
     path('forgetpassword/',auth_view.forgetPasswordView),
     # path('activate/<str:uid>/<str:token>', auth_view.activate, name='activate'),
     # url(r'^account_activation_sent/$', auth_view.account_activation_sent, name='account_activation_sent'),

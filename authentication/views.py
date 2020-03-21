@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from  django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.http import HttpResponse,HttpRequest
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.views import redirect_to_login
 from django.views import View
 from .forms import SignupForm
@@ -30,6 +30,10 @@ def loginView(self):
     
 def registerView(self):
     return render(self,'auth/register.html')
+
+def logout_user(request):
+    logout(request)
+    return redirect("/product")
 
 class Signup(View):
     def get(self, request):
@@ -81,6 +85,9 @@ class Signup(View):
 def activate(request, uidb64, token,backend='django.contrib.auth.backends.ModelBackend'):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except ValueError:
+        uid=uidb64
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
