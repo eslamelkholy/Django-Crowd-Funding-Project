@@ -46,23 +46,16 @@ class Signup(View):
         return render(request, 'auth/register.html')
 
     def post(self, request):
-        # user1={}
-        # user1["username"]=request.POST["username"]        
-        # user1["first_name"]=request.POST["first_name"]
-        # user1["last_name"]=request.POST["last_name"]
-        # user1["email"]=request.POST["email"]
-        # user1["password1"]=request.POST["password1"]
-        # user1["password2"]=request.POST["password2"]
         form = SignupForm(request.POST,request.FILES)
         if form.is_valid():
             # Create an inactive user with no password:
-            user = User.objects.create(first_name=request.POST["firstname"]
+            user = User.objects.create_user(first_name=request.POST["firstname"]
             ,last_name=request.POST["lastname"]
             ,username=request.POST["username"]
-            ,email=request.POST["email"],password=request.POST["password1"]
-            ,is_active = True)
+            ,email=request.POST["email"]
+            ,is_active = False)
        
-            # user.set_password(request.POST["password1"])
+            user.set_password(request.POST["password1"])
 
             profile=Profile(user=user,phone=request.POST["phone"],user_img=request.FILES["image"])
            
