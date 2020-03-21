@@ -1,13 +1,13 @@
 {% extends "profiles/base.html" %}
 {% load static %}
-
 {% block data1 %}
+
 {% for user in u_data %}
 <a href="#" class="img logo rounded-circle mb-5" style="background-image: url({% static 'image/'%}{{user.user_img}});"></a>
 <h2> {{ user.fname }} {{ user.lname }}</h2>
    <ul class="list-unstyled components mb-5">
-	          <li class="active">
-	            <a href="../">Home</a>
+	          <li >
+	            <a href="/profiles">Home</a>
 
 	          </li>
 	          <li>
@@ -16,14 +16,14 @@
                 <li>
 	              <a href="../donations">Donations</a>
 	          </li>
-	          <li>
+	          <li class="active">
               <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
               <ul class="collapse list-unstyled" id="pageSubmenu">
                 <li>
-                    <a href="">Edit Profile</a>
+                    <a href="../edit">Edit Profile</a>
                 </li>
                 <li>
-                    <a href="../delete">Delete Account </a>
+                    <a href="">Delete Account </a>
                 </li>
 
               </ul>
@@ -35,7 +35,7 @@
 
 {% block data2 %}
        <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/profiles">Home</a>
                 </li>
                 <li class="nav-item">
@@ -44,30 +44,57 @@
                 <li class="nav-item">
                     <a class="nav-link" href="../donations">Donations</a>
                 </li>
-                  <li class="nav-item">
+                  <li class="nav-item active">
                       <a href="#menu" data-toggle="collapse" class="dropdown-toggle nav-link">Settings</a>
                                   <ul class="collapse list-unstyled" id="menu">
                                       <li>
-                                        <a href="">Edit Profile</a>
+                                        <a href="../edit">Edit Profile</a>
                                     </li>
-                                    <li>
-                                        <a href="../delete">Delete Account </a>
+                                    <li >
+                                        <a href="">Delete Account </a>
                                     </li>
                                   </ul>
                   </li>
        </ul>
-
 {% endblock %}
 {% block table %}
 {% for user in u_data %}
-    <form method="POST"  action ="/profiles/edit/" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-        <div class="form-group col-md-6">
-            <img src="{% static 'image/'%}{{user.user_img}} " style="width:80px;height:80px"/>
-         </div>
-        <input type="submit" value="save" class="btn btn-warning ">
 
-    </form>
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" class="form-control" value="{{ user.fname }} {{ user.lname }}" readonly>
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" class="form-control" id = "pass" value="{{user.password}}" readonly>
+  </div>
+  <button onclick="deleteUser()" class="btn btn-danger ">Delete</button>
+
 {% endfor %}
+{%endblock%}
+
+{%block js%}
+<script>
+    function deleteUser(){
+        var pass = document.getElementById("pass").value;
+        var action = confirm("Are you sure you want to delete this account?");
+        if (action != false) {
+            var password = prompt("Please enter your password");
+            if (password != null && pass == password) {
+                $.ajax({
+                    url: '{% url "delete" %}',
+                    data: {
+                        'id': "id",
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data['deleted']=true) {
+                          window.location.href="/login_register/login"
+                        }
+                    }
+                });
+            }
+        }
+     }
+</script>
 {% endblock %}
