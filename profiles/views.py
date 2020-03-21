@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from project.models import Project, Donation
 from user.models import User
-from .forms import UserForm
+# from .forms import UserForm
 
 
 # Create your views here.

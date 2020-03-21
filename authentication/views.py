@@ -14,6 +14,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
+from user.models import Profile
 # Create your views here.
 def loginView(self):
     message={"msg":""}
@@ -41,25 +42,31 @@ def forget_password_view(request):
 
 class Signup(View):
     def get(self, request):
-        form = SignupForm()
-        return render(request, 'auth/register.html',{"form":form})
+        # form = SignupForm()
+        return render(request, 'auth/register.html')
 
     def post(self, request):
-        user1={}
-        user1["username"]=request.POST["username"]        
-        user1["first_name"]=request.POST["first_name"]
-        user1["last_name"]=request.POST["last_name"]
-        user1["email"]=request.POST["email"]
-        user1["password1"]=request.POST["password1"]
-        user1["password2"]=request.POST["password2"]
-        form = SignupForm(user1)
+        # user1={}
+        # user1["username"]=request.POST["username"]        
+        # user1["first_name"]=request.POST["first_name"]
+        # user1["last_name"]=request.POST["last_name"]
+        # user1["email"]=request.POST["email"]
+        # user1["password1"]=request.POST["password1"]
+        # user1["password2"]=request.POST["password2"]
+        form = SignupForm(request.POST,request.FILES)
         if form.is_valid():
             # Create an inactive user with no password:
-            user = form.save(commit=False)
-                
-            user.is_active = False
-            user.set_password(request.POST["password1"])
-            user.save()
+            user = User.objects.create(first_name=request.POST["firstname"]
+            ,last_name=request.POST["lastname"]
+            ,username=request.POST["username"]
+            ,email=request.POST["email"],password=request.POST["password1"]
+            ,is_active = True)
+       
+            # user.set_password(request.POST["password1"])
+
+            profile=Profile(user=user,phone=request.POST["phone"],user_img=request.FILES["image"])
+           
+            profile.save()
 
             current_site = get_current_site(request)
             subject = 'Please Activate Your Account'
@@ -84,7 +91,7 @@ class Signup(View):
             user.email_user(subject, message)
             return HttpResponse('We have sent you an email, please confirm your email address to complete registration')
         else:
-            return HttpResponse("errors in validations")
+            return HttpResponse(form.errors)
 
 def activate(request, uidb64, token,backend='django.contrib.auth.backends.ModelBackend'):
     try:
