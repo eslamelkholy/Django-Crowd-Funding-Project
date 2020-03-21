@@ -1,16 +1,6 @@
-<html>
-    <head>
-        <title>register</title>
-        {%load static %}
-
-        <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}" >
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
-    <script src="{% static 'js/jquery.min.js'%}"></script>
-    </head>
-    <body>
-    
-		<div class="container">
-            <img id="logo" src="{% static 'image/1.jpg'%}" alt="logo"/>
+{% extends 'auth/base.html' %}
+{% block title%}Login{%endblock title %}
+{% block content %}
             <!-- <form action="/login_register/signup/" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
@@ -58,5 +48,6 @@
             }
             document.onloadeddata=$("input").addClass("form-control");
          </script>
+         {% endblock content%}
             </body>
 </html>
