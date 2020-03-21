@@ -17,19 +17,31 @@ from django.contrib import admin
 from django.urls import path
 import authentication.views as auth_view
 from django.conf.urls import url
-
+from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('login/',auth_view.loginView,name="login"),
     path('signin/',auth_view.signin),
-    # path('register/',auth_view.registerView,name="register"),
     path('register/', auth_view.Signup.as_view(), name='register'),
     path('signup/',auth_view.Signup.as_view()),
     path('logout/',auth_view.logout_user),
-    path('forgetpassword/',auth_view.forgetPasswordView),
-    # path('activate/<str:uid>/<str:token>', auth_view.activate, name='activate'),
+    path('forgetpassword/',auth_views.PasswordResetView.as_view( template_name='auth/change-password.html',
+            success_url = '/'),name='password_reset'),
+    path('password-reset-confirm/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(
+             template_name='auth/password_reset_confirm.html'
+         ),
+         name='password_reset_confirm'),
+    path('password-reset-complete/',
+         auth_views.PasswordResetCompleteView.as_view(
+             template_name='auth/password_reset_complete.html'
+         ),
+         name='password_reset_complete'),
+    path('password-reset/done/',
+         auth_views.PasswordResetDoneView.as_view(
+             template_name='auth/password_reset_done.html'
+         ),
+         name='password_reset_done'),
     # url(r'^account_activation_sent/$', auth_view.account_activation_sent, name='account_activation_sent'),
-    # url(r'activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-    #     auth_view.activate, name='activate'),
-
+   
 
 ]

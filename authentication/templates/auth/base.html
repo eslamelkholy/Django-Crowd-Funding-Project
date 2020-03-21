@@ -1,0 +1,18 @@
+<html>
+<head>
+	<title>{%block title%}Crowd Funding Project{%endblock title%}</title>
+		{%load static%}
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css'%}" >
+    <link rel="stylesheet" href="{% static 'css/style.css'%}" >
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+
+
+</head>
+<body>
+	<div class="container">
+		<img id="logo" src="{% static 'image/1.jpg'%}" alt="logo"/>
+        {% block content %}{% endblock content %}
+	</div>
+</body>
+
+</html>

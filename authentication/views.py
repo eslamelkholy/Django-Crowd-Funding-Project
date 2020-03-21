@@ -15,6 +15,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 # Create your views here.
+def loginView(self):
+    message={"msg":""}
+    return render(self,'auth/login.html',message)
+    
+
 def signin(request):
     #check if user exist
     user=authenticate(request,username=request.POST['username'],password=request.POST['password'])
@@ -22,18 +27,17 @@ def signin(request):
         login(request,user)
         return redirect("/project")
     else:
-        return HttpResponse(user)
+        return HttpResponse("username or passord is not correct")
 
-def loginView(self):
-    message={"msg":""}
-    return render(self,'auth/login.html',message)
-    
-def registerView(self):
-    return render(self,'auth/register.html')
 
 def logout_user(request):
     logout(request)
-    return redirect("/product")
+    return redirect("/project")
+
+
+def forget_password_view(request):
+    return render(request,"auth/forgetPassword.html")
+
 
 class Signup(View):
     def get(self, request):
@@ -99,5 +103,3 @@ def activate(request, uidb64, token,backend='django.contrib.auth.backends.ModelB
         return render(request, 'auth/success.html')
     else:
         return HttpResponse("activation failed")
-def forgetPasswordView(self):
-    return HttpResponse("forget password view")
