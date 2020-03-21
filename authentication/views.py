@@ -16,16 +16,13 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 # Create your views here.
 def signin(request):
+    #check if user exist
     user=authenticate(request,username=request.POST['username'],password=request.POST['password'])
-    # user.save()
     if user is not None:
         login(request,user)
-        return redirect('/product')
+        return redirect("/project")
     else:
-        # message={"msg":"invalid password"}
-        # return redirect('auth/login.html',message)
-        # return redirect_to_login("product/", login_url=None)
-        return HttpResponse(request.POST['username'])
+        return HttpResponse(user)
 
 def loginView(self):
     message={"msg":""}
@@ -33,21 +30,6 @@ def loginView(self):
     
 def registerView(self):
     return render(self,'auth/register.html')
- 
-def signup(request):
-    username=request.POST["username"]    
-    email=request.POST["email"]
-    password=request.POST["password"]
-    firstname=request.POST["firstname"]
-    lastname=request.POST["lastname"]
-    user=User.objects.create_user(username,email,password,firstname,lastname)
-    user.save()
-    # return redirect("/login_register/login")
-    user=authenticate(username=request.POST['username'],password=request.POST['password'])
-    return redirect("/project")
-
-    # return HttpResponse(request.POST))
-
 
 class Signup(View):
     def get(self, request):
@@ -68,21 +50,9 @@ class Signup(View):
             user = form.save(commit=False)
                 
             user.is_active = False
-            user.set_unusable_password()
+            user.set_password(request.POST["password1"])
             user.save()
 
-            
-
-            # Send an email to the user with the token:
-            # mail_subject = 'Activate your account.'
-            # current_site = get_current_site(request)
-            # uid = urlsafe_base64_encode(force_bytes(user.pk))
-            # token = account_activation_token.make_token(user)
-            # activation_link = "{0}/login_register/activate/?uidb64={1}/?token={2}".format(current_site, uid, token)
-            # message = "Hello {0},\n {1}".format(user.username, activation_link)
-            # to_email = form.cleaned_data.get('email')
-            # email = EmailMessage(mail_subject, message, to=[to_email])
-            # email.send()
             current_site = get_current_site(request)
             subject = 'Please Activate Your Account'
             # load a template like get_template() 
@@ -106,9 +76,9 @@ class Signup(View):
             user.email_user(subject, message)
             return HttpResponse('We have sent you an email, please confirm your email address to complete registration')
         else:
-            return HttpResponse("fail")
+            return HttpResponse("errors in validations")
 
-def activate(request, uidb64, token):
+def activate(request, uidb64, token,backend='django.contrib.auth.backends.ModelBackend'):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -117,11 +87,10 @@ def activate(request, uidb64, token):
 
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
-        user.user.email_confirmed = True
         user.save()
-        login(request, user)
-        return redirect('product')
-    else:
+        login(request, user,backend='django.contrib.auth.backends.ModelBackend')
         return render(request, 'auth/success.html')
+    else:
+        return HttpResponse("activation failed")
 def forgetPasswordView(self):
     return HttpResponse("forget password view")
