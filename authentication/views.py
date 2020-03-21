@@ -31,6 +31,7 @@ def signin(request):
         return HttpResponse("username or passord is not correct")
 
 
+
 def logout_user(request):
     logout(request)
     return redirect("/project")
@@ -42,7 +43,6 @@ def forget_password_view(request):
 
 class Signup(View):
     def get(self, request):
-        # form = SignupForm()
         return render(request, 'auth/register.html')
 
     def post(self, request):
@@ -54,7 +54,6 @@ class Signup(View):
             ,username=request.POST["username"]
             ,email=request.POST["email"]
             ,is_active = False)
-       
             user.set_password(request.POST["password1"])
 
             profile=Profile(user=user,phone=request.POST["phone"],user_img=request.FILES["image"])
@@ -85,6 +84,7 @@ class Signup(View):
             return HttpResponse('We have sent you an email, please confirm your email address to complete registration')
         else:
             return HttpResponse(form.errors)
+
 
 def activate(request, uidb64, token,backend='django.contrib.auth.backends.ModelBackend'):
     try:
