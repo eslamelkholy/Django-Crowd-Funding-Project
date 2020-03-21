@@ -82,6 +82,9 @@ def activate(request, uidb64, token,backend='django.contrib.auth.backends.ModelB
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
+    except ValueError:
+        uid=uidb64
+        user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
