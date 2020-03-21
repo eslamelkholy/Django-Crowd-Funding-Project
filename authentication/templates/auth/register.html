@@ -1,24 +1,30 @@
 {% extends 'auth/base.html' %}
-{% block title%}Login{%endblock title %}
+{% block title%}Register{%endblock title %}
 {% block content %}
-            <!-- <form action="/login_register/signup/" method="post" enctype="multipart/form-data">
+            <form action="/login_register/signup/" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                   <label for="exampleInputEmail1">User Name: </label>
                   <input type="text" class="form-control"  name="username" id="username">
                 </div>
+                
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" name="password" id="password">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword2">Password</label>
-                  <input type="password" class="form-control" name="password2" id="password2">
+                  <label for="phone">Phone: </label>
+                  <input type="text" class="form-control"  name="phone" id="phone" aria-describedby="emailHelp">
+                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email: </label>
                     <input type="email" class="form-control"  name="email" id="email" aria-describedby="emailHelp">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" name="password1" id="password">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword2">Confirm Password</label>
+                    <input type="password" class="form-control" name="password2" id="password2">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">First Name: </label>
@@ -30,24 +36,24 @@
                   </div>
                   <div class="form-group">
                     Profile Pic
-                    <input type="file" name="fileToUpload" id="fileToUpload" >
+                    <input type="file" name="image" id="image" >
                   </div>
                 <button type="submit" class="btn btn-primary">Register</button>
               </form>
-             -->
-             <form action="/login_register/signup/" method="post" enctype="multipart/form-data">
+            
+             <!-- <form action="/login_register/signup/" method="post" enctype="multipart/form-data">
               {% csrf_token %}
 
              {{form.as_p}}
              <button type="submit" class="btn btn-primary">Register</button>
 
-            </form>
-          <script>
+            </form> -->
+          <!-- <script>
             function addClass2(){
          $("input").addClass("form-control");
             }
             document.onloadeddata=$("input").addClass("form-control");
-         </script>
+         </script> -->
          {% endblock content%}
             </body>
 </html>
