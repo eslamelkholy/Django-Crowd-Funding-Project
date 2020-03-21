@@ -33,7 +33,7 @@ def registerView(self):
 
 def logout_user(request):
     logout(request)
-    return redirect("/product")
+    return redirect("/project")
 
 class Signup(View):
     def get(self, request):
