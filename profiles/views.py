@@ -84,7 +84,6 @@ def delete(request):
         try:
             User.objects.get(pk=3).delete()
         except:
-            raise EOFError
             return JsonResponse({"deleted":False})
         else:
             return JsonResponse({"deleted":True})
