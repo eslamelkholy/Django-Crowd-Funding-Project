@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 
+=======
+>>>>>>> 90690dd80700b0a2f9cb84b15eddec99705b5f66
 
 
 # Create your models here.
@@ -43,7 +46,7 @@ class Report(models.Model):
 # Payment Class
 class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)
-    amount = models.FloatField(null=True)
+    payment_amount = models.FloatField(null=True,blank=True)
     timestamp  = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     project = models.ForeignKey("Project",on_delete=models.SET_NULL,null=True)
@@ -60,5 +63,5 @@ class Rating(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     rate = models.IntegerField(choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)], null=False)
 
-    def __str__(self):
-        return f"{self.user_id.fname} rates {self.project_id.title} with: {str(self.rate)}"
+    # def __str__(self):
+    #     return f"{self.user_id.fname} rates {self.project_id.title} with: {str(self.rate)}"

@@ -3,8 +3,13 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 # class User(models.Model):
+<<<<<<< HEAD
 #     user=models.OneToOneField(User,on_delete=models.CASCADE)
 #     u_id = models.AutoField(primary_key=True)
+=======
+    # user=models.OneToOneField(User,on_delete=models.CASCADE)
+    # u_id = models.AutoField(primary_key=True)
+>>>>>>> 90690dd80700b0a2f9cb84b15eddec99705b5f66
     # fname = models.CharField(max_length=50)
     # lname = models.CharField(max_length=50)
     # email = models.EmailField(max_length=200)
