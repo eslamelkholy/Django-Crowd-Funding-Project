@@ -153,8 +153,8 @@ def payment_process(request):
             # Create the payment
             payment = Payment()
             payment.stripe_charge_id = charge['id']
-            payment.amout = float(amount)
-            payment.user = User.objects.get(u_id = 1)
+            payment.payment_amount = float(request.POST['amout_of_payment'])
+            payment.user = User.objects.get(id = 1)
             payment.project = Project.objects.get(p_id = int(request.POST['project_id']))
             payment.save()
             messages.success(request,"Your Donation Was Finished Successfully !")

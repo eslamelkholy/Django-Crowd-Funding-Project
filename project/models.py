@@ -42,7 +42,7 @@ class Report(models.Model):
 # Payment Class
 class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)
-    amount = models.FloatField(null=True,blank=True)
+    payment_amount = models.FloatField(null=True,blank=True)
     timestamp  = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     project = models.ForeignKey("Project",on_delete=models.SET_NULL,null=True)
