@@ -1,3 +1,73 @@
-<h2>ff</h2>
-{% extends "profiles/index.html" %}
-<h2>fff</h2>
+{% extends "profiles/base.html" %}
+{% load static %}
+
+{% block data1 %}
+{% for user in u_data %}
+<a href="#" class="img logo rounded-circle mb-5" style="background-image: url({% static 'image/'%}{{user.user_img}});"></a>
+<h2> {{ user.fname }} {{ user.lname }}</h2>
+   <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="../">Home</a>
+
+	          </li>
+	          <li>
+	              <a href="../projects">Projects</a>
+	          </li>
+                <li>
+	              <a href="../donations">Donations</a>
+	          </li>
+	          <li>
+              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
+              <ul class="collapse list-unstyled" id="pageSubmenu">
+                <li>
+                    <a href="">Edit Profile</a>
+                </li>
+                <li>
+                    <a href="../delete">Delete Account </a>
+                </li>
+
+              </ul>
+	          </li>
+
+	        </ul>
+{% endfor %}
+{% endblock %}
+
+{% block data2 %}
+       <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/profiles">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../projects">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../donations">Donations</a>
+                </li>
+                  <li class="nav-item">
+                      <a href="#menu" data-toggle="collapse" class="dropdown-toggle nav-link">Settings</a>
+                                  <ul class="collapse list-unstyled" id="menu">
+                                      <li>
+                                        <a href="">Edit Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="../delete">Delete Account </a>
+                                    </li>
+                                  </ul>
+                  </li>
+       </ul>
+
+{% endblock %}
+{% block table %}
+{% for user in u_data %}
+    <form method="POST"  action ="/profiles/edit/" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <div class="form-group col-md-6">
+            <img src="{% static 'image/'%}{{user.user_img}} " style="width:80px;height:80px"/>
+         </div>
+        <input type="submit" value="save" class="btn btn-warning ">
+
+    </form>
+{% endfor %}
+{% endblock %}

@@ -19,13 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from project import views as project_views
 from comments import views as comment_views
-import authentication.urls as auth
 from django.conf.urls import url
 import authentication.views as auth_view
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login_register/',include(auth)),
+    path('',project_views.project),
+    path('login_register/',include('authentication.urls')),
     path('profiles/', include('profiles.urls')),
     url('^api/v1/', include('social_django.urls', namespace='social')),
     path('activate/<slug:uidb64>/<slug:token>/', auth_view.activate, name='activate'),
