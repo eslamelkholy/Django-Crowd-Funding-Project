@@ -63,7 +63,7 @@ class Signup(View):
             ,is_active = True)
        
             # user.set_password(request.POST["password1"])
-
+            print(user)
             profile=Profile(user=user,phone=request.POST["phone"],user_img=request.FILES["image"])
            
             profile.save()

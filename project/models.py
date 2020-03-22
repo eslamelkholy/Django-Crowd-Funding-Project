@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 
 # Create your models here.
@@ -12,7 +14,7 @@ class Project(models.Model):
     end_date = models.DateField()
     tags = models.CharField(max_length=200)
     category = models.ForeignKey("category.Category", on_delete=models.CASCADE, null=True)
-    user = models.ForeignKey("user.User", on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
 
 # Image Class
@@ -27,7 +29,7 @@ class Donation(models.Model):
     donate_id = models.AutoField(primary_key=True)
     donate_amount = models.IntegerField()
     project = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
-    user = models.ForeignKey("user.User", on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
 
 # Repor Project Model
@@ -35,7 +37,7 @@ class Report(models.Model):
     report_id = models.AutoField(primary_key=True)
     report_content = models.CharField(max_length=255)
     project = models.ForeignKey("Project",on_delete=models.CASCADE,null=True)
-    user = models.ForeignKey("user.User",on_delete=models.CASCADE,null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 
 
 # Payment Class
@@ -43,7 +45,7 @@ class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)
     amount = models.FloatField(null=True)
     timestamp  = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey("user.User",on_delete=models.SET_NULL,null=True)
+    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     project = models.ForeignKey("Project",on_delete=models.SET_NULL,null=True)
     def __str__(self):
         return self.user.name
@@ -55,7 +57,7 @@ class Rating(models.Model):
          unique_together = (('project_id', 'user_id'),)
 
     project_id = models.ForeignKey("Project", on_delete=models.CASCADE, null=False)
-    user_id = models.ForeignKey("user.User", on_delete=models.CASCADE, null=False)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     rate = models.IntegerField(choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)], null=False)
 
     def __str__(self):
