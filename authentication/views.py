@@ -52,18 +52,11 @@ class Signup(View):
             user = User.objects.create_user(first_name=request.POST["firstname"]
             ,last_name=request.POST["lastname"]
             ,username=request.POST["username"]
-<<<<<<< HEAD
             ,email=request.POST["email"],password=request.POST["password1"]
             ,is_active = True)
        
             # user.set_password(request.POST["password1"])
             print(user)
-=======
-            ,email=request.POST["email"]
-            ,is_active = False)
-            user.set_password(request.POST["password1"])
-
->>>>>>> 90690dd80700b0a2f9cb84b15eddec99705b5f66
             profile=Profile(user=user,phone=request.POST["phone"],user_img=request.FILES["image"])
            
             profile.save()
