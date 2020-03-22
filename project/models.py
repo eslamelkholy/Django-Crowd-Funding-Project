@@ -1,9 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-<<<<<<< HEAD
-
-=======
->>>>>>> 90690dd80700b0a2f9cb84b15eddec99705b5f66
 
 
 # Create your models here.
