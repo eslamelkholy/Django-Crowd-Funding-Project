@@ -132,3 +132,55 @@ header .text{
     color:#ccc;
     overflow: hidden;
 }
+.latest{
+    width:300px;
+    float:left;
+    overflow:hidden;
+    text-align:center;
+    margin-left:15px;
+    width:240px;
+    background-color:#233142;
+    color:#FFF;
+    padding-bottom:30px;
+    margin-bottom:70px;
+    border-radius:8px;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    -ms-border-radius:8px;
+    -o-border-radius:8px;
+    margin-top:30px;
+}
+.found img{
+    width:100%;
+    height:185px
+}
+.found h3,h2{
+    padding:0;
+    margin:0
+}
+.found h3{
+    margin:10px 0px;
+    font-size:20px;
+    color:#005542
+}
+.found h2{
+    font-size:20px;
+    color:#FFF
+}
+.found h2:last-of-type{
+    margin-bottom:30px
+}
+.found a{
+    padding: 7px 28px;
+    background-color:#ff5959;
+    border-radius:8px;
+    text-decoration:none;
+    color:#FFF;
+    font-weight:bold;
+    font-size:16px;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    -ms-border-radius:8px;
+    -o-border-radius:8px;
+}
+

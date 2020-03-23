@@ -1,25 +1,22 @@
 {%load static%}
 
-
-
 <div id="carouselExampleIndicators" class="carousel slide carousel-fade mt-5 col-8 offset-2" data-ride="carousel">
 
   <div class="carousel-inner">
 
-      {%for i in projects%}
+    {%for i in similars%}
     <div class="carousel-item">
         <div class="card bg-secondary">
-          <img class="card-img-top similarProjectImg" src="/{{project.image.image_name.url}}" alt="Card image cap">
+          <img class="card-img-top similarProjectImg" src="{% static 'image/'%}" alt="Card image cap">
           <div class="card-body">
             <strong class="card-title text-info">{{i.title}}</strong>
             <p class="card-text text-dark">{{i.details}}</p>
           </div>
           <div class="card-body seeMoreBtn">
-            <a href="/project/{{i.p_id}}" class="btn btn-primary" >see more</a>
+            <a href="" class="btn btn-primary" >see more</a>
           </div>
         </div>
     </div>
-
     {%endfor%}
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
