@@ -31,7 +31,7 @@ urlpatterns = [
     path('addproject',project_views.addproject),
     path('project/<int:id>',project_views.listProject),
     path('project/',project_views.project),
-    path('similarProjects/<int:cat_id>', project_views.get_similer_projects),
+    path('category/<int:cat_id>', project_views.category_projects),
     path('search',project_views.search),
     path('project/report',project_views.reportProject),
     path('project/addcomment',comment_views.addComment),

@@ -58,7 +58,7 @@
     <h2 class="h1  font-weight-bold text-decoration">List of the categories</h2>
 
     {% for project in categories %}
-      <a class="list-group-item list-group-item-action list-group-item-primary" href="/similarProjects/{{project.cat_id }}">{{project.cat_name}}</a>
+      <a class="list-group-item list-group-item-action list-group-item-primary" href="/category/{{project.cat_id }}">{{project.cat_name}}</a>
     {% endfor %}
   </div>
   

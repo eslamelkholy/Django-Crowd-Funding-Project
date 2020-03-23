@@ -165,7 +165,7 @@ header .text{
 }
 .found h2{
     font-size:20px;
-    color:#FFF
+    color:rgb(253, 6, 6)
 }
 .found h2:last-of-type{
     margin-bottom:30px

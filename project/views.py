@@ -274,3 +274,12 @@ def search(request):
         except:
             raise HttpResponseRedirect("Not Found")
     return render(request,'projects/search.html',{'projects':projects})
+
+# Category
+
+def category_projects(request,cat_id):
+    projects = Project.objects.filter(category=cat_id)
+    context = {
+        "projects" : projects,
+    }
+    return render(request,'projects/category.html',context)
