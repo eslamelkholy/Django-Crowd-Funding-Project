@@ -50,9 +50,10 @@ def edit(request):
         form = UserForm(request.POST,request.FILES)
         if form.is_valid():
             for data in u_data:
-                data.fname = request.POST['fname']
-                data.lname = request.POST['lname']
-                data.password = request.POST['password']
+                myid = request.session['id']
+                data.user.first_name = request.POST['fname']
+                data.user.last_name = request.POST['lname']
+                data.user.password = request.POST['password']
                 data.phone = request.POST['phone']
                 data.birthdate = request.POST['birthdate']
                 data.fbprofile = request.POST['fbprofile']
