@@ -25,7 +25,7 @@ from category.models import Category
 from comments.models import Comments
 from django.views.decorators.csrf import csrf_exempt
 
-# to get the similer projects baset on tags
+# to get the similar projects based on tags
 def get_similer_projects(id):
     tags = [i for i in Project.objects.filter(p_id=id)[0].tags.split(" ")]
     similer_projects = [Project.objects.filter(tags__contains=i).exclude(p_id=id) for i in tags]
@@ -266,14 +266,12 @@ def cancel_project(request):
 
 # Search
 def search(request):
-    tag=request.POST('search')
-    if tag[0]=='#':
-        tag=tag[1:]
-        try:
-            projects=Project.objects.filter(tags=tag)
-        except:
-            raise HttpResponseRedirect("Not Found")
-    return render(request,'projects/search.html',{'projects':projects})
+    tag="#"+request.POST['search']
+    try:
+        projects=Project.objects.filter(tags__contains=tag)
+    except:
+        raise HttpResponseRedirect("Not Found")
+    return render(request,'projects/view.html',{'projects':projects})
 
 # Category
 
@@ -282,4 +280,4 @@ def category_projects(request,cat_id):
     context = {
         "projects" : projects,
     }
-    return render(request,'projects/category.html',context)
+    return render(request,'projects/view.html',context)
