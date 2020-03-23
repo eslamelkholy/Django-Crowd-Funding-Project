@@ -25,7 +25,7 @@
 
             {%for image in images%}
             <div class="carousel-item mainprojectSlider">
-                <img src="{%static image%}" class="d-block w-100 sliderImg" alt="...">
+                <img src="/{{project.image.image_name.url}}" class="d-block w-100 sliderImg" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                 </div>
             </div>

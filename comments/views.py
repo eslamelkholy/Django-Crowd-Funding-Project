@@ -9,19 +9,35 @@ from django.core import serializers
 from .models import Comments,ReportComment
 from project.models import Project
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 
 # Add Comment
 def addComment(request):
     if request.user.is_authenticated():
+=======
+from user.models import Profile
+
+# Add Comment
+def addComment(request):
+    if request.user.is_authenticated:
+>>>>>>> edfb5f3434cd8dc47d616a305d8fd496becc647b
         if request.is_ajax and request.method == 'POST':
             if request.POST['comment_content'] :
                 newComment = Comments()
                 newComment.comment_body = request.POST['comment_content']
+<<<<<<< HEAD
                 newComment.user = User.objects.get(id = int(request.session['id']))
                 newComment.project = Project.objects.get(p_id = int(request.POST['project_id']))
                 newComment.save()
                 ser_instance = serializers.serialize('json', [ newComment])
                 return  JsonResponse({"data": ser_instance,"username":newComment.user.fname + ' ' + newComment.user.lname,"c_id" : newComment.comment_id,"user_img": str(newComment.user.user_img)}, status=200)
+=======
+                newComment.profile = Profile.objects.get(user_id = int(request.session['id']))
+                newComment.project = Project.objects.get(p_id = int(request.POST['project_id']))
+                newComment.save()
+                ser_instance = serializers.serialize('json', [ newComment])
+                return  JsonResponse({"data": ser_instance,"username":newComment.profile.user.first_name + ' ' + newComment.profile.user.last_name,"c_id" : newComment.comment_id,"user_img": str(newComment.profile.user_img)}, status=200)
+>>>>>>> edfb5f3434cd8dc47d616a305d8fd496becc647b
             else:
                 return JsonResponse({"error": "Please Fill The Comment"}, status=400)
     else:
@@ -30,13 +46,21 @@ def addComment(request):
 
 # Report Specified Comment
 def reportComment(request):
+<<<<<<< HEAD
     if request.user.is_authenticated():
+=======
+    if request.user.is_authenticated:
+>>>>>>> edfb5f3434cd8dc47d616a305d8fd496becc647b
         if request.is_ajax and request.method == 'POST':
             if request.POST['report_content']:
                 new_report = ReportComment()
                 new_report.report_content = request.POST['report_content']
                 new_report.comment = Comments.objects.get(comment_id = int(request.POST['comment_id']))
+<<<<<<< HEAD
                 new_report.user = User.objects.get(id = int(request.session['id']))
+=======
+                new_report.profile = Profile.objects.get(user_id = int(request.session['id']))
+>>>>>>> edfb5f3434cd8dc47d616a305d8fd496becc647b
                 new_report.save()
                 return JsonResponse({"id" : "Done"})
             else:

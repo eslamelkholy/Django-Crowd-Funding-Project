@@ -30,4 +30,8 @@ class Profile(models.Model):
     # email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
+<<<<<<< HEAD
         return self.user
+=======
+        return self.user.username
+>>>>>>> edfb5f3434cd8dc47d616a305d8fd496becc647b

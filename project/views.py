@@ -1,14 +1,14 @@
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.db.models import Avg
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 # Add Project Form Validation
 from .forms import ProjectForm
-from .models import Payment
+from .models import Payment ,FeatureProjects
 from category.models import Category
 from comments.models import Comments
 from django.contrib.auth.models import User
@@ -25,7 +25,7 @@ from category.models import Category
 from comments.models import Comments
 from django.views.decorators.csrf import csrf_exempt
 
-# to get the similer projects baset on tags
+# to get the similar projects based on tags
 def get_similer_projects(id):
     tags = [i for i in Project.objects.filter(p_id=id)[0].tags.split(" ")]
     similer_projects = [Project.objects.filter(tags__contains=i).exclude(p_id=id) for i in tags]
@@ -121,7 +121,7 @@ def addproject(request):
 # Report Project Handler
 
 def reportProject(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.is_ajax and request.method == 'POST':
             if request.POST['report_text']:
                 newReport = Report()
@@ -138,8 +138,19 @@ def reportProject(request):
 
 # Project Home Page
 def project(request):
-    return render(request, "projects/projectHome.html")
-
+    projects = Project.objects.all()
+    ProjectRate=Rating.objects.annotate(avg=Avg('rate')).order_by('-rate')[:5]
+    lastProject = Project.objects.order_by('p_id')[:5]
+    featureProjects = FeatureProjects.objects.order_by('project_id')[:5]
+    categories = Category.objects.all()
+    context = {
+        "projects": projects,
+        "ProjectRate":ProjectRate,
+        "featureProjects":featureProjects,
+        "lastProject": lastProject,
+        "categories": categories,
+    }
+    return render(request, "projects/projectHome.html", context)
 
 # Project Donation Amout Page
 def donate_project(request,title):
@@ -210,7 +221,8 @@ def payment_process(request):
 
 
 def rate_project(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
+        print("authenticated!!!!!!!!!!!!!!!!!!!!!!!!")
         if request.method== 'POST':
             p_id=int(request.POST['project_id'])
             u_id=int(request.session['id'])
@@ -233,7 +245,7 @@ def rate_project(request):
         raise PermissionDenied
 
 def cancel_project(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.method=="POST":
             u_id=request.session['id']
             p_id=request.POST['p_id']
@@ -252,5 +264,20 @@ def cancel_project(request):
     else:
         raise PermissionDenied
 
+# Search
+def search(request):
+    tag="#"+request.POST['search']
+    try:
+        projects=Project.objects.filter(tags__contains=tag)
+    except:
+        raise HttpResponseRedirect("Not Found")
+    return render(request,'projects/view.html',{'projects':projects})
 
+# Category
 
+def category_projects(request,cat_id):
+    projects = Project.objects.filter(category=cat_id)
+    context = {
+        "projects" : projects,
+    }
+    return render(request,'projects/view.html',context)
