@@ -188,7 +188,6 @@
             url: 'http://localhost:8000/project/addcomment',
             data: {
                 project_id: '{{project.p_id}}',
-                user_id: "1",
                 comment_content: $("input[name='commentContent']").val(),
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
@@ -211,6 +210,9 @@
                     '</div>' +
                     '</div>';
                 $("#PostContainer").append(html);
+            },
+            error: function(error) {
+                location.replace('/login_register/login');
             }
         })
     });
@@ -228,7 +230,6 @@
             data: {
                 comment_id: comment_id,
                 report_content: $("#report_comment").val(),
-                user_id: "1",
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
             success(data) {
@@ -241,6 +242,9 @@
                     $('#reportCommentModal').modal('hide');
                     $("#closeReportComment").trigger('click');
                 }, 1300);
+            },
+            error: function(error) {
+                location.replace('/login_register/login');
             }
         })
     });
@@ -252,7 +256,6 @@
             url: 'http://localhost:8000/project/report',
             data: {
                 project_id: '{{project.p_id}}',
-                user_id: "1",
                 report_text: $("#report_text").val(),
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
@@ -266,6 +269,9 @@
                     $('#exampleModal').modal('hide');
                     $("#CloseReportModal").trigger('click');
                 }, 1300);
+            },
+            error: function(error) {
+                location.replace('/login_register/login');
             }
         })
     });

@@ -26,6 +26,8 @@ def signin(request):
     user=authenticate(request,username=request.POST['username'],password=request.POST['password'])
     if user is not None:
         login(request,user)
+        request.session['id']=user.id
+        print("session id",request.session['id'])
         return redirect("/project")
     else:
         return HttpResponse("username or passord is not correct")
@@ -52,10 +54,11 @@ class Signup(View):
             user = User.objects.create_user(first_name=request.POST["firstname"]
             ,last_name=request.POST["lastname"]
             ,username=request.POST["username"]
-            ,email=request.POST["email"]
-            ,is_active = False)
-            user.set_password(request.POST["password1"])
-
+            ,email=request.POST["email"],password=request.POST["password1"]
+            ,is_active = True)
+       
+            # user.set_password(request.POST["password1"])
+            print(user)
             profile=Profile(user=user,phone=request.POST["phone"],user_img=request.FILES["image"])
            
             profile.save()
@@ -100,6 +103,8 @@ def activate(request, uidb64, token,backend='django.contrib.auth.backends.ModelB
         user.is_active = True
         user.save()
         login(request, user,backend='django.contrib.auth.backends.ModelBackend')
+        request.session['id']=user.id
+        print("session id",request.session['id'])
         return render(request, 'auth/success.html')
     else:
         return HttpResponse("activation failed")
