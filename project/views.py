@@ -25,7 +25,7 @@ from category.models import Category
 from comments.models import Comments
 from django.views.decorators.csrf import csrf_exempt
 
-# to get the similer projects baset on tags
+# to get the similar projects based on tags
 def get_similer_projects(id):
     tags = [i for i in Project.objects.filter(p_id=id)[0].tags.split(" ")]
     similer_projects = [Project.objects.filter(tags__contains=i).exclude(p_id=id) for i in tags]
