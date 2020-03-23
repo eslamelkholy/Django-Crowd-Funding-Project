@@ -121,7 +121,7 @@ def addproject(request):
 # Report Project Handler
 
 def reportProject(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.is_ajax and request.method == 'POST':
             if request.POST['report_text']:
                 newReport = Report()
@@ -221,7 +221,8 @@ def payment_process(request):
 
 
 def rate_project(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
+        print("authenticated!!!!!!!!!!!!!!!!!!!!!!!!")
         if request.method== 'POST':
             p_id=int(request.POST['project_id'])
             u_id=int(request.session['id'])
@@ -244,7 +245,7 @@ def rate_project(request):
         raise PermissionDenied
 
 def cancel_project(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.method=="POST":
             u_id=request.session['id']
             p_id=request.POST['p_id']

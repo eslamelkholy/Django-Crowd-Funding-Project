@@ -30,4 +30,4 @@ class Profile(models.Model):
     # email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user
+        return self.user.username
