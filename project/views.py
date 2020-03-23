@@ -1,14 +1,14 @@
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.db.models import Avg
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 # Add Project Form Validation
 from .forms import ProjectForm
-from .models import Payment
+from .models import Payment ,FeatureProjects
 from category.models import Category
 from comments.models import Comments
 from django.contrib.auth.models import User
@@ -138,8 +138,19 @@ def reportProject(request):
 
 # Project Home Page
 def project(request):
-    return render(request, "projects/projectHome.html")
-
+    projects = Project.objects.all()
+    ProjectRate=Rating.objects.annotate(avg=Avg('rate')).order_by('-rate')[:5]
+    lastProject = Project.objects.order_by('p_id')[:5]
+    featureProjects = FeatureProjects.objects.order_by('project_id')[:5]
+    categories = Category.objects.all()
+    context = {
+        "projects": projects,
+        "ProjectRate":ProjectRate,
+        "featureProjects":featureProjects,
+        "lastProject": lastProject,
+        "categories": categories,
+    }
+    return render(request, "projects/projectHome.html", context)
 
 # Project Donation Amout Page
 def donate_project(request,title):
@@ -253,4 +264,13 @@ def cancel_project(request):
         raise PermissionDenied
 
 
-
+# Search
+def search(request):
+    tag=request.POST('search')
+    if tag[0]=='#':
+        tag=tag[1:]
+        try:
+            projects=Project.objects.filter(tags=tag)
+        except:
+            raise HttpResponseRedirect("Not Found")
+    return render(request,'projects/search.html',{'projects':projects})

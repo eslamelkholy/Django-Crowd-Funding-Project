@@ -6,12 +6,12 @@
 
   <div class="carousel-inner">
 
-      {%for i in similars%}
-    <div class="carousel-item similerProjectsSlider">
-        <div class="card bg-secondary courouselCard">
-          <img class="card-img-top similarProjectImg" src="{% static i.image%}" alt="Card image cap">
-          <div class="card-body similerProjectsBody">
-            <strong class="card-title projectTitle">{{i.title}}</strong>
+      {%for i in projects%}
+    <div class="carousel-item">
+        <div class="card bg-secondary">
+          <img class="card-img-top similarProjectImg" src="/{{project.image.image_name.url}}" alt="Card image cap">
+          <div class="card-body">
+            <strong class="card-title text-info">{{i.title}}</strong>
             <p class="card-text text-dark">{{i.details}}</p>
           </div>
           <div class="card-body seeMoreBtn">

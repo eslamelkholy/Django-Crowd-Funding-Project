@@ -15,6 +15,11 @@ class Project(models.Model):
     category = models.ForeignKey("category.Category", on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
+    def image(self):
+        return self.images_set.all().first()
+    def __str__(self):
+        return self.title
+
 
 # Image Class
 class Images(models.Model):
@@ -61,3 +66,11 @@ class Rating(models.Model):
 
     # def __str__(self):
     #     return f"{self.user_id.fname} rates {self.project_id.title} with: {str(self.rate)}"
+
+
+# FeatureProjects
+class FeatureProjects(models.Model):
+    project = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return str(self.project.title)
