@@ -44,7 +44,7 @@ def donations(request):
 @login_required()
 def edit(request):
     print("request",request)
-    u_data = Profile.objects.filter(id=request.session['id'])
+    u_data = Profile.objects.filter(user_id=request.session['id'])
     if request.method == "POST":
         print(request.POST)
         form = UserForm(request.POST,request.FILES)
@@ -69,8 +69,8 @@ def edit(request):
     else:
         form = UserForm()
 
-    p_data = Project.objects.filter(id=request.session['id'])
-    d_data = Donation.objects.filter(user_id=2)
+    p_data = Project.objects.filter(p_id=request.session['id'])
+    d_data = Donation.objects.filter(user_id=request.session['id'])
 
     context = {
         'u_data': u_data,
