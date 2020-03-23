@@ -266,11 +266,9 @@ def cancel_project(request):
 
 # Search
 def search(request):
-    tag=request.POST('search')
-    if tag[0]=='#':
-        tag=tag[1:]
-        try:
-            projects=Project.objects.filter(tags=tag)
-        except:
-            raise HttpResponseRedirect("Not Found")
+    tag="#"+request.POST['search']
+    try:
+        projects=Project.objects.filter(tags__contains=tag)
+    except:
+        raise HttpResponseRedirect("Not Found")
     return render(request,'projects/search.html',{'projects':projects})
