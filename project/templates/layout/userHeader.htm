@@ -23,9 +23,9 @@
         <img class="commentImg" style="margin-left: 10px;border-radius: 50%;width: 50px; height: 50px;" src="{% static 'image/2_Pc4d7Hd.jpg'%}">
         </li>
     </ul>
-    <form action="/search" method="POST">
+    <form action="/view" method="POST">
       {% csrf_token %}
-        <input type="text" name="search" placeholder="Type # and TagName">
+        <input type="text" name="search" placeholder="Type TagName">
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </nav>

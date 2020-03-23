@@ -11,8 +11,8 @@
     <div class="slide" >
       <span class="animate in" style="background-image: url(/{{project.project_id.image.image_name.url}})"></span>
         <div class="text">
-            <p >Fundraising for the people and causes you care about</p>
-            <h6>Get Started Today.</h6>
+            <h3><strong class="text-primary">Project Title: </strong>{{project.project_id.title}}</h3>
+            <p>{{project.project_id.details|truncatechars:50}}</p>
             <a class="button btn-success" href="{{project.project_id.p_id}}">Read More</a>
         </div>
     </div>
@@ -55,10 +55,10 @@
     {% endfor %}
   </div>
   <div class="list-group mt-5" style="width: 50%;">
-    <h2 class="h1  font-weight-bold text-decoration">List of the categories</h2>
+    <h3 class="font-weight-bold text-decoration">List Of The Categories</h3>
 
     {% for project in categories %}
-      <a class="list-group-item list-group-item-action list-group-item-primary" href="/similarProjects/{{project.cat_id }}">{{project.cat_name}}</a>
+      <a class="list-group-item list-group-item-action list-group-item-primary" href="/view/{{project.cat_id }}">{{project.cat_name}}</a>
     {% endfor %}
   </div>
   

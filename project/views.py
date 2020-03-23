@@ -272,4 +272,13 @@ def search(request):
         projects=Project.objects.filter(tags__contains=tag)
     except:
         raise HttpResponseRedirect("Not Found")
-    return render(request,'projects/search.html',{'projects':projects})
+    return render(request,'projects/view.html',{'projects':projects})
+
+# Category
+
+def category_projects(request,cat_id):
+    projects = Project.objects.filter(category=cat_id)
+    context = {
+        "projects" : projects,
+    }
+    return render(request,'projects/view.html',context)
