@@ -2,9 +2,9 @@
 {% load static %}
 {% block data1 %}
 
-{% for user in u_data %}
-<a href="#" class="img logo rounded-circle mb-5" style="background-image: url({% static 'image/'%}{{user.user_img}});"></a>
-<h2> {{ user.fname }} {{ user.lname }}</h2>
+{% for data in u_data %}
+<a href="#" class="img logo rounded-circle mb-5" style="background-image: url({% static 'image/'%}{{data.user_img}});"></a>
+<h2> {{ data.user.first_name }} {{ data.user.last_name }}</h2>
    <ul class="list-unstyled components mb-5">
 	          <li >
 	            <a href="/profiles">Home</a>
@@ -58,15 +58,15 @@
        </ul>
 {% endblock %}
 {% block table %}
-{% for user in u_data %}
+{% for data in u_data %}
 
   <div class="form-group">
     <label>Name</label>
-    <input type="text" class="form-control" value="{{ user.fname }} {{ user.lname }}" readonly>
+    <input type="text" class="form-control" value="{{ data.user.first_name }} {{ data.user.last_name }}" readonly>
   </div>
   <div class="form-group">
     <label>Password</label>
-    <input type="password" class="form-control" id = "pass" value="{{user.password}}" readonly>
+    <input type="password" class="form-control" id = "pass" value="{{data.user.password}}" readonly>
   </div>
   <button onclick="deleteUser()" class="btn btn-danger ">Delete</button>
 
