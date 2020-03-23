@@ -91,6 +91,9 @@
                         if (data['deleted']=true) {
                           window.location.href="/login_register/login"
                         }
+                    },
+                    error: function (error) {
+                        location.replace('/login_register/login');
                     }
                 });
             }

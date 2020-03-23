@@ -34,7 +34,6 @@
                 type:'POST',
                 url:'/rate/project',
                 data:{
-                    user_id:"1",
                     project_id:{{project.p_id}},
                     rate:target_star.value,
                     csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
@@ -43,7 +42,7 @@
                     console.log(data);
                 },
                 error:function(){
-                    console.log("error");
+                    location.replace('/login_register/login');
                 }
             })
     })

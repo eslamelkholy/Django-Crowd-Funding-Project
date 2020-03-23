@@ -1,9 +1,9 @@
-from django import forms
-from user.models import User
-
-
+# from django import forms
+# from user.models import User
+#
+#
 # class UserForm(forms.ModelForm):
-
+#
 #     u_data = User.objects.filter(pk=2)
 #     for user in u_data:
 #         if user:
@@ -16,7 +16,7 @@ from user.models import User
 #             fbprofile = forms.CharField(required=False, widget=forms.TextInput(attrs={"class":"form-control col-md-6"}))
 #             country = forms.CharField(required=False, widget=forms.TextInput(attrs={"class":"form-control col-md-6"}))
 #             user_img = forms.ImageField(required=False,label="Profile Picture")
-
+#
 #     class Meta:
 #         model = User
 #         fields = [

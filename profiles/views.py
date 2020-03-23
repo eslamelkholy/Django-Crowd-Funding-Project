@@ -2,7 +2,10 @@ from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from project.models import Project, Donation
-from user.models import User
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+
 # from .forms import UserForm
 
 
@@ -24,7 +27,7 @@ def projects(request):
     }
     return render(request, 'profiles/projects.html', context)
 
-
+@login_required()
 def donations(request):
     u_data = User.objects.filter(pk=2)
     p_data = Project.objects.filter(user_id=2)
@@ -36,7 +39,7 @@ def donations(request):
     }
     return render(request, 'profiles/donations.html', context)
 
-
+@login_required()
 def edit(request):
     print("request",request)
     u_data = User.objects.filter(pk=2)
@@ -76,17 +79,19 @@ def edit(request):
 
 
 def delete(request):
-
-    u_data = User.objects.filter(pk=3)
-    p_data = Project.objects.filter(user_id=3)
-    d_data = Donation.objects.filter(user_id=3)
+    u_data = User.objects.filter(id=request.session['id'])
+    p_data = Project.objects.filter(id=request.session['id'])
+    d_data = Donation.objects.filter(id=request.session['id'])
     if request.method == 'GET' and 'id' in request.GET:
-        try:
-            User.objects.get(pk=3).delete()
-        except:
-            return JsonResponse({"deleted":False})
+        if request.user.is_authenticated():
+            try:
+                User.objects.get(id=request.session['id']).delete()
+            except:
+                return JsonResponse({"deleted":False})
+            else:
+                return JsonResponse({"deleted":True})
         else:
-            return JsonResponse({"deleted":True})
+            raise PermissionDenied
     else:
         context = {
             'u_data': u_data,

@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.db.models import Avg
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
@@ -7,10 +8,13 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 # Add Project Form Validation
 from .forms import ProjectForm
-from .models import Project,Images,Report,Payment
+from .models import Payment
 from category.models import Category
 from comments.models import Comments
-from user.models import User
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+
 # Stipe
 import stripe
 stripe.api_key = "sk_test_BfzJ6A79Q955Tt2DaVGrGKS900BMCGkffo"
@@ -19,7 +23,6 @@ stripe.api_key = "sk_test_BfzJ6A79Q955Tt2DaVGrGKS900BMCGkffo"
 from .models import Project,Images,Report,Rating
 from category.models import Category
 from comments.models import Comments
-from user.models import User
 from django.views.decorators.csrf import csrf_exempt
 
 # to get the similer projects baset on tags
@@ -39,9 +42,12 @@ def get_similer_projects(id):
     return similers
 
 # to get the rates and avg-rate of a project
-def rate_projects(id):
+def rate_projects(id,this_user_id):
     ratings= Rating.objects.filter(project_id=int(id))
-    user_rating=ratings.get(user_id=1).rate
+    try:
+        user_rating=ratings.filter(user_id=int(this_user_id))[0].rate
+    except IndexError:
+        user_rating=0
     ratings_counter={rate.rate: len(ratings.filter(rate=rate.rate)) for rate in ratings}
     ratings_counter['count']=len(ratings)
     ratings_counter['avg']=ratings.aggregate(Avg('rate'))['rate__avg']
@@ -60,7 +66,10 @@ def listProject(request,id):
     user_project = Project.objects.filter(p_id = int(id)).first()
     comments = Comments.objects.filter(project_id = int(id))
     # rating projects
-    ratings_counter=rate_projects(id)
+    try:
+        ratings_counter=rate_projects(id,request.session['id'])
+    except KeyError:
+        ratings_counter=rate_projects(id,0)
     # similar projects
     similers=get_similer_projects(id)
     #project images
@@ -73,6 +82,7 @@ def listProject(request,id):
 
 
 # Add Project
+@login_required()
 def addproject(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST,request.FILES)
@@ -85,7 +95,7 @@ def addproject(request):
             new_project.end_date = request.POST['end_date']
             new_project.tags = request.POST['tags']
             new_project.current_amout = "0"
-            new_project.user = User.objects.get(u_id = 1)
+            new_project.user = User.objects.get(id = request.session['id']) #update in user id
             new_project.category = Category.objects.get(cat_id = int(request.POST['category']))
             new_project.save()
             # MultiPle Image Section
@@ -109,17 +119,21 @@ def addproject(request):
 
 
 # Report Project Handler
+
 def reportProject(request):
-    if request.is_ajax and request.method == 'POST':
-        if request.POST['report_text']:
-            newReport = Report()
-            newReport.report_content = request.POST['report_text']
-            newReport.user = User.objects.get(u_id = int(request.POST['user_id']))
-            newReport.proejct = Project.objects.get(p_id = int(request.POST['project_id']))
-            newReport.save()
-            return JsonResponse({"done":"Done"})
-        else:
-            return JsonResponse({"error":"Error"})
+    if request.user.is_authenticated():
+        if request.is_ajax and request.method == 'POST':
+            if request.POST['report_text']:
+                newReport = Report()
+                newReport.report_content = request.POST['report_text']
+                newReport.user = User.objects.get(id = int(request.session['id'])) #update in user id
+                newReport.proejct = Project.objects.get(p_id = int(request.POST['project_id']))
+                newReport.save()
+                return JsonResponse({"done":"Done"})
+            else:
+                return JsonResponse({"error":"Error"})
+    else:
+        raise PermissionDenied
 
 
 # Project Home Page
@@ -137,6 +151,7 @@ def donate_project(request,title):
         return HttpResponse("404 Not Found Kid!!")
 
 # Payment View
+@login_required()
 def payment_process(request):
     if request.method == 'POST':
         token = request.POST['stripeToken']
@@ -154,7 +169,7 @@ def payment_process(request):
             payment = Payment()
             payment.stripe_charge_id = charge['id']
             payment.payment_amount = float(request.POST['amout_of_payment'])
-            payment.user = User.objects.get(id = 1)
+            payment.user = User.objects.get(id = int(request.session['id']))
             payment.project = Project.objects.get(p_id = int(request.POST['project_id']))
             payment.save()
             messages.success(request,"Your Donation Was Finished Successfully !")
@@ -193,45 +208,49 @@ def payment_process(request):
     else:
         return HttpResponse("404 Not Found")
 
-def rate_project(request):
-    if request.method== 'POST':
-        p_id=int(request.POST['project_id'])
-        u_id=int(request.POST['user_id'])
-        rate=int(request.POST['rate'])
-        rate_record=Rating.objects.filter(project_id_id=p_id,user_id_id=u_id).update(rate=rate)
-        if rate_record:
-            return JsonResponse({"done": rate})
-        else:
-            try:
-                Rating.objects.create(
-                    project_id=Project.objects.get(p_id=p_id),
-                    user_id=User.objects.get(u_id=u_id),
-                    rate=rate
-                )
-            except:
-                return JsonResponse({"error":"error"})
-            else:
-                return JsonResponse({"done":rate})
 
+def rate_project(request):
+    if request.user.is_authenticated():
+        if request.method== 'POST':
+            p_id=int(request.POST['project_id'])
+            u_id=int(request.session['id'])
+            rate=int(request.POST['rate'])
+            rate_record=Rating.objects.filter(project_id=p_id,user_id=u_id).update(rate=rate)
+            if rate_record:
+                return JsonResponse({"done": rate})
+            else:
+                try:
+                    Rating.objects.create(
+                        project_id=Project.objects.get(p_id=p_id),
+                        user_id=User.objects.get(id=u_id),
+                        rate=rate
+                    )
+                except:
+                    return JsonResponse({"error":"error"})
+                else:
+                    return JsonResponse({"done":rate})
+    else:
+        raise PermissionDenied
 
 def cancel_project(request):
-    print("reached function!!!!")
-    if request.method=="POST":
-        u_id=request.POST['u_id']
-        p_id=request.POST['p_id']
-        this_project=Project.objects.get(p_id=p_id)
-        if this_project:
-            current_donation=this_project.current_amout
-            total_target=this_project.total_target
-            percentage=current_donation/total_target
-            if percentage <0.25:
-                # this_project.delete()
-                return JsonResponse({"done":"done"})
+    if request.user.is_authenticated():
+        if request.method=="POST":
+            u_id=request.session['id']
+            p_id=request.POST['p_id']
+            this_project=Project.objects.get(p_id=p_id)
+            if this_project:
+                current_donation=this_project.current_amout
+                total_target=this_project.total_target
+                percentage=current_donation/total_target
+                if percentage <0.25:
+                    this_project.delete()
+                    return JsonResponse({"done":"done"})
+                else:
+                    return JsonResponse({"not_approved":"not_approved"})
             else:
-                return JsonResponse({"not_approved":"not_approved"})
-        else:
-            return JsonResponse({"error"})
-
+                return JsonResponse({"error":"error"})
+    else:
+        raise PermissionDenied
 
 
 

@@ -59,22 +59,18 @@
             url:'/cancel/project',
             data:{
                 p_id:{{project.p_id}},
-                u_id:"1",
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
             },
             success:function(data){
                 if(data['not_approved']){
                     $("#notApprovedBtn").click();
                 }
-                if(data['done']){
-<!--                    $("#cancellingIndecation").append("<span class='badge badge-danger'>cancelled</span>");-->
-<!--                    $("#projectTitle").addClass("text-danger");-->
-<!--                    $(".projectInfo").addClass("text-danger");-->
+                else if(data['done']){
                         location.replace("/project");
                 }
             },
-            error:function(data){
-                console.log("error",data);
+            error:function(error){
+                    location.replace('/login_register/login');
             }
 
         });

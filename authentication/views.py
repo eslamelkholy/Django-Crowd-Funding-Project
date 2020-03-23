@@ -26,6 +26,8 @@ def signin(request):
     user=authenticate(request,username=request.POST['username'],password=request.POST['password'])
     if user is not None:
         login(request,user)
+        request.session['id']=user.id
+        print("session id",request.session['id'])
         return redirect("/project")
     else:
         return HttpResponse("username or passord is not correct")
@@ -101,6 +103,8 @@ def activate(request, uidb64, token,backend='django.contrib.auth.backends.ModelB
         user.is_active = True
         user.save()
         login(request, user,backend='django.contrib.auth.backends.ModelBackend')
+        request.session['id']=user.id
+        print("session id",request.session['id'])
         return render(request, 'auth/success.html')
     else:
         return HttpResponse("activation failed")
