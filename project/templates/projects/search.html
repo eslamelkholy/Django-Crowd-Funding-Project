@@ -1,0 +1,17 @@
+{% extends "layout/layout.html" %}
+{% block content %}
+{% include "layout/userHeader.htm" %}
+    {% for found in projects %}
+        <div class="found">
+            <img src="{{ found.image.image_name.url }}" >
+            <h3>Project Title</h3>
+            <h2>{{ found.project.title }}</h2>
+            <h3>Project Total Target</h3>
+            <h2>{{ found.project.total_target}}</h3>
+            <h3>Project Category</h3>
+            <h2>{{ found.project.category }}</h2>
+            <a href="" target="_blank">See more</a>
+        </div>
+    {% endfor %}
+    <div class="clear"></div>
+{% endblock %}
