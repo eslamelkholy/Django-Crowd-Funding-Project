@@ -8,11 +8,7 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 # Add Project Form Validation
 from .forms import ProjectForm
-<<<<<<< HEAD
-from .models import Payment
-=======
 from .models import Payment ,FeatureProjects
->>>>>>> edfb5f3434cd8dc47d616a305d8fd496becc647b
 from category.models import Category
 from comments.models import Comments
 from django.contrib.auth.models import User
@@ -125,11 +121,7 @@ def addproject(request):
 # Report Project Handler
 
 def reportProject(request):
-<<<<<<< HEAD
-    if request.user.is_authenticated():
-=======
     if request.user.is_authenticated:
->>>>>>> edfb5f3434cd8dc47d616a305d8fd496becc647b
         if request.is_ajax and request.method == 'POST':
             if request.POST['report_text']:
                 newReport = Report()
