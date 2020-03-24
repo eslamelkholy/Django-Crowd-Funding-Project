@@ -3,14 +3,13 @@ from django.contrib.auth.models import User
 from user.models import Profile
 
 
-
 class UserForm(forms.ModelForm):
 
-    u_data = Profile.objects.filter(pk=1)
+    u_data = Profile.objects.filter(pk=3)
     for data in u_data:
         if data:
             first_name = forms.CharField(label="FirstName", widget=forms.TextInput(attrs={"value": data.user.first_name, "class":"form-control col-md-6"}))
-            lname = forms.CharField(label="LastName", widget=forms.TextInput(attrs={"value": data.user.last_name, "class":"form-control col-md-6"}))
+            last_name = forms.CharField(label="LastName", widget=forms.TextInput(attrs={"value": data.user.last_name, "class":"form-control col-md-6"}))
             email = forms.CharField(disabled=True,required=False, label="Email", widget=forms.EmailInput(attrs={"value": data.user.email, "class":"form-control col-md-6"}))
             password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={"value": data.user.password, "class":"form-control col-md-6"}))
             phone = forms.CharField(label="Phone", widget=forms.NumberInput(attrs={"value": data.phone, "class":"form-control col-md-6"}))
@@ -21,7 +20,7 @@ class UserForm(forms.ModelForm):
 
 
     class Meta:
-        model = User
+        model = Profile
         fields = [
             'first_name',
             'last_name',
