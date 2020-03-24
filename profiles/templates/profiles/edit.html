@@ -6,8 +6,11 @@
 <a href="#" class="img logo rounded-circle mb-5" style="background-image: url({% static 'image/'%}{{data.user_img}});"></a>
 <h2> {{ data.user.first_name }} {{ data.user.last_name }}</h2>
    <ul class="list-unstyled components mb-5">
-	          <li class="active">
-	            <a href="../">Home</a>
+             <li>
+	              <a href="../../project">Home</a>
+	          </li>
+	          <li >
+	            <a href="../">Profile</a>
 
 	          </li>
 	          <li>
@@ -16,8 +19,8 @@
                 <li>
 	              <a href="../donations">Donations</a>
 	          </li>
-	          <li>
-              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
+	          <li class="active">
+              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">Settings</a>
               <ul class="collapse list-unstyled" id="pageSubmenu">
                 <li>
                     <a href="">Edit Profile</a>
@@ -35,8 +38,11 @@
 
 {% block data2 %}
        <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/profiles">Home</a>
+                 <li class="nav-item">
+                    <a class="nav-link" href="../../project">Home</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/profiles">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../projects">Projects</a>
@@ -44,7 +50,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="../donations">Donations</a>
                 </li>
-                  <li class="nav-item">
+                  <li class="nav-item active">
                       <a href="#menu" data-toggle="collapse" class="dropdown-toggle nav-link">Settings</a>
                                   <ul class="collapse list-unstyled" id="menu">
                                       <li>
