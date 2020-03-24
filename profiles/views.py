@@ -67,7 +67,7 @@ def edit(request):
             print("erorr")
 
     else:
-        form = UserForm()
+        form = UserForm(request.session['id'])
 
     p_data = Project.objects.filter(p_id=request.session['id'])
     d_data = Donation.objects.filter(user_id=request.session['id'])

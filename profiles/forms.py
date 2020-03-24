@@ -1,12 +1,17 @@
 from django import forms
 from django.contrib.auth.models import User
 from user.models import Profile
+from django.contrib.auth.forms import UserCreationForm
 
 
 
-class UserForm(forms.ModelForm):
+class UserForm(UserCreationForm):
+    user_id=0
+    def __init__(self, userId):
+        super().__init__()
+        UserForm.user_id=userId
 
-    u_data = Profile.objects.filter(pk=1)
+    u_data = Profile.objects.filter(pk=user_id)
     for data in u_data:
         if data:
             first_name = forms.CharField(label="FirstName", widget=forms.TextInput(attrs={"value": data.user.first_name, "class":"form-control col-md-6"}))
@@ -22,6 +27,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
+
         fields = [
             'first_name',
             'last_name',
