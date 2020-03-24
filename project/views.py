@@ -222,7 +222,6 @@ def payment_process(request):
 
 def rate_project(request):
     if request.user.is_authenticated:
-        print("authenticated!!!!!!!!!!!!!!!!!!!!!!!!")
         if request.method== 'POST':
             p_id=int(request.POST['project_id'])
             u_id=int(request.session['id'])
