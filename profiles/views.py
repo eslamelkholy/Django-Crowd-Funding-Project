@@ -48,7 +48,7 @@ def edit(request):
     u_data = Profile.objects.filter(user_id=request.session['id'])
 
     if request.method == "POST":
-        u_form = UserForm(request.POST,request.FILES)
+        u_form = UserForm(request.POST)
         p_form = ProfileForm(request.POST,request.FILES)
         if u_form.is_valid() and p_form.is_valid():
             for data in u_data:
