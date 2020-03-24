@@ -5,8 +5,11 @@
 <a href="#" class="img logo rounded-circle mb-5" style="background-image: url({% static 'image/'%}{{data.user_img}});"></a>
 <h2> {{ data.user.first_name }} {{ data.user.last_name }}</h2>
    <ul class="list-unstyled components mb-5">
+            <li>
+	              <a href="../../project">Home</a>
+	          </li>
 	          <li >
-	            <a href="../">Home</a>
+	            <a href="../">Profile</a>
 	          </li>
 	          <li>
 	              <a href="../projects">Projects</a>
@@ -31,8 +34,11 @@
 
 {% block data2 %}
        <ul class="nav navbar-nav ml-auto">
+                 <li class="nav-item">
+                    <a class="nav-link" href="../../project">Home</a>
+                </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="../">Home</a>
+                    <a class="nav-link" href="../">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../projects">Projects</a>

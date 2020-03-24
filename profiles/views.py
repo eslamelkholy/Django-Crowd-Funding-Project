@@ -46,7 +46,6 @@ def donations(request):
 def edit(request):
     print("request",request)
     u_data = Profile.objects.filter(user_id=request.session['id'])
-
     if request.method == "POST":
         u_form = UserForm(request.POST)
         p_form = ProfileForm(request.POST,request.FILES)
