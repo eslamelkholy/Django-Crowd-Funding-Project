@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate
 
 # Create your views here.
 def index(request):
-    u_data = Profile.objects.filter(id=request.session['id'])
+    u_data = Profile.objects.filter(user_id=request.session['id'])
     context = {
         'u_data': u_data
     }
@@ -22,7 +22,7 @@ def index(request):
 
 
 def projects(request):
-    u_data = Profile.objects.filter(id=request.session['id'])
+    u_data = Profile.objects.filter(user_id=request.session['id'])
     p_data = Project.objects.filter(user_id=request.session['id'])
     context = {
         'u_data': u_data,
@@ -32,7 +32,7 @@ def projects(request):
 
 @login_required()
 def donations(request):
-    u_data = Profile.objects.filter(id=request.session['id'])
+    u_data = Profile.objects.filter(user_id=request.session['id'])
     p_data = Project.objects.filter(user_id=request.session['id'])
     d_data = Donation.objects.filter(user_id=request.session['id'])
     context = {
@@ -83,14 +83,17 @@ def edit(request):
 
 
 def delete(request):
-    u_data = Profile.objects.filter(id=request.session['id'])
+    u_data = Profile.objects.filter(user_id=request.session['id'])
     p_data = Project.objects.filter(user_id=request.session['id'])
     d_data = Donation.objects.filter(user_id=request.session['id'])
 
-    if request.method == 'GET' and 'id' in request.GET:
-        if request.user.is_authenticated():
+    if request.method == 'GET' and 'password' in request.GET:
+        out = authenticate(request, username=request.GET['name'], password=request.GET['password'])
+        if out is not None:
             try:
-                Profile.objects.get(id=request.session['id']).delete()
+                Profile.objects.get(user_id=request.session['id']).delete()
+                User.objects.get(pk=request.session['id']).delete()
+
             except:
                 return JsonResponse({"deleted":False})
             else:

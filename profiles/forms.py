@@ -22,13 +22,18 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = [
-            'first_name',
-            'last_name',
-            'email',
-            'password',
+
             'phone',
             'birthdate',
             'fbprofile',
             'country',
             'user_img',
             ]
+
+
+"""
+    'user[first_name]',
+            'user.last_name',
+            'user.email',
+            'user.password',
+"""
