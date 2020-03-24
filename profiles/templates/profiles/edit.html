@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block data1 %}
-{% for user in u_data %}
-<a href="#" class="img logo rounded-circle mb-5" style="background-image: url({% static 'image/'%}{{user.user_img}});"></a>
-<h2> {{ user.fname }} {{ user.lname }}</h2>
+{% for data in u_data %}
+<a href="#" class="img logo rounded-circle mb-5" style="background-image: url({% static 'image/'%}{{data.user_img}});"></a>
+<h2> {{ data.user.first_name }} {{ data.user.last_name }}</h2>
    <ul class="list-unstyled components mb-5">
 	          <li class="active">
 	            <a href="../">Home</a>
@@ -59,12 +59,12 @@
 
 {% endblock %}
 {% block table %}
-{% for user in u_data %}
+{% for data in u_data %}
     <form method="POST"  action ="/profiles/edit/" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
         <div class="form-group col-md-6">
-            <img src="{% static 'image/'%}{{user.user_img}} " style="width:80px;height:80px"/>
+            <img src="{% static 'image/'%}{{data.user_img}} " style="width:80px;height:80px"/>
          </div>
         <input type="submit" value="save" class="btn btn-warning ">
 

@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/media/hadeer/New Volume/Open Source/python/project/venv"
+VIRTUAL_ENV="/home/hadeer/Downloads/Django-Crowd-Funding-Project/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
