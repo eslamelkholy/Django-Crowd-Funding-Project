@@ -1,5 +1,9 @@
-<form action="/login_register/signin/" method="post">
-	{% csrf_token %}
-	<input type="text" name="email" id="email">
-
-</form>
+{% extends 'auth/base.html' %}
+{% block title%}Activation Failed {%endblock title %}
+{% block content %}
+<h1>Sorry the activation link isn't valid or expired please register again</h1>
+<p>We will redirect to home page after seconds</p>
+<script>
+    setTimeout(function(){window.location.href=window.location.origin},6000);
+</script>
+{%endblock content%}

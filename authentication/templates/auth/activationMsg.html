@@ -1,0 +1,10 @@
+{% extends 'auth/base.html' %}
+{% block title%}Check Mail {%endblock title %}
+{% block content %}
+
+<p >We have sent you an email, please confirm your email address to complete registration</p>
+<p>We will redirect to home page after seconds</p>
+<script>
+    setTimeout(function(){window.location.href=window.location.origin+"/login_register/login"},6000);
+</script>
+{%endblock content%}

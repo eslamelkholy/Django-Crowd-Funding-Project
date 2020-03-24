@@ -62,7 +62,7 @@
 
   <div class="form-group">
     <label>Name</label>
-    <input type="text" class="form-control" value="{{ data.user.first_name }} {{ data.user.last_name }}" readonly>
+    <input type="text" id = "name" class="form-control" value="{{ data.user.username }}" readonly>
   </div>
   <div class="form-group">
     <label>Password</label>
@@ -76,15 +76,15 @@
 {%block js%}
 <script>
     function deleteUser(){
-        var pass = document.getElementById("pass").value;
+        var name = document.getElementById("name").value;
         var action = confirm("Are you sure you want to delete this account?");
         if (action != false) {
             var password = prompt("Please enter your password");
-            if (password != null && pass == password) {
                 $.ajax({
                     url: '{% url "delete" %}',
                     data: {
-                        'id': "id",
+                        'password': password,
+                        'name':name,
                     },
                     dataType: 'json',
                     success: function (data) {
@@ -93,10 +93,10 @@
                         }
                     },
                     error: function (error) {
-                        location.replace('/login_register/login');
+                        location.replace('/profiles/delete');
                     }
                 });
-            }
+
         }
      }
 </script>

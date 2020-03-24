@@ -62,7 +62,8 @@
 {% for data in u_data %}
     <form method="POST"  action ="/profiles/edit/" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.as_p}}
+        {{u_form.as_p}}
+        {{p_form.as_p}}
         <div class="form-group col-md-6">
             <img src="{% static 'image/'%}{{data.user_img}} " style="width:80px;height:80px"/>
          </div>
