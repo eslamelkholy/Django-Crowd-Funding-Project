@@ -56,11 +56,7 @@ class Signup(View):
             ,username=request.POST["username"]
             ,email=request.POST["email"],password=request.POST["password1"]
             ,is_active = True)
-       
-            # user.set_password(request.POST["password1"])
-            print(user)
             profile=Profile(user=user,phone=request.POST["phone"],user_img=request.FILES["image"])
-           
             profile.save()
 
             current_site = get_current_site(request)
@@ -84,7 +80,7 @@ class Signup(View):
                     'token': account_activation_token.make_token(user),
                 })
             user.email_user(subject, message)
-            return HttpResponse('We have sent you an email, please confirm your email address to complete registration')
+            return render(request,"auth/activationMsg.html")
         else:
             return HttpResponse(form.errors)
 
@@ -107,4 +103,4 @@ def activate(request, uidb64, token,backend='django.contrib.auth.backends.ModelB
         print("session id",request.session['id'])
         return render(request, 'auth/success.html')
     else:
-        return HttpResponse("activation failed")
+        return render(request, "auth/fail.html")
