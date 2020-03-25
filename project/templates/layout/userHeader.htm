@@ -17,15 +17,15 @@
           <a class="nav-link text-danger" href="?logout=true">Logout</span></a>
         </li>
         <li class="nav-item active">
-            <button style="margin-left: 10px" class="btn btn-outline-warning my-2 my-sm-0">Eslam Elkholy</button>
+            <button style="margin-left: 10px" class="btn btn-outline-warning my-2 my-sm-0">{{username}}</button>
         </li>
         <li class="nav-item active">
-        <img class="commentImg" style="margin-left: 10px;border-radius: 50%;width: 50px; height: 50px;" src="{% static 'image/2_Pc4d7Hd.jpg'%}">
+        <img class="commentImg" style="margin-left: 10px;border-radius: 50%;width: 50px; height: 50px;" src="{% static user_img%}">
         </li>
     </ul>
     <form action="/view" method="POST">
       {% csrf_token %}
-        <input type="text" name="search" placeholder="Type TagName">
+        <input type="text" name="search" placeholder="project tags">
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </nav>
