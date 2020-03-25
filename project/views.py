@@ -51,7 +51,7 @@ def rate_projects(id,this_user_id):
         user_rating=0
     ratings_counter={rate.rate: len(ratings.filter(rate=rate.rate)) for rate in ratings}
     ratings_counter['count']=len(ratings)
-    ratings_counter['avg']=ratings.aggregate(Avg('rate'))['rate__avg']
+    ratings_counter['avg']=round(ratings.aggregate(Avg('rate'))['rate__avg'],2)
     ratings_counter['thisRate']=user_rating
     return ratings_counter
 

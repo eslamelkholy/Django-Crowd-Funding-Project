@@ -38,6 +38,7 @@ def logout_user(request):
     logout(request)
     return redirect('#')
 
+
 def forget_password_view(request):
     return render(request,"auth/forgetPassword.html")
 

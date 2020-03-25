@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="../profiles">Profile</span></a>
+          <a class="nav-link" href="../profiles/projects">Profile</span></a>
         </li>
       </ul>
     </div>
@@ -17,7 +17,7 @@
           <a class="nav-link text-danger" href="/login_register/logout">Logout</span></a>
         </li>
         <li class="nav-item active">
-            <a style="margin-left: 10px" class="btn btn-outline-warning my-2 my-sm-0" href="../profiles">{{username}}</a>
+            <a style="margin-left: 10px" class="btn btn-outline-warning my-2 my-sm-0" href="../profiles/projects">{{username}}</a>
         </li>
         <li class="nav-item active">
         <img class="commentImg" style="margin-left: 10px;border-radius: 50%;width: 50px; height: 50px;" src="{% static user_img%}">
@@ -25,7 +25,7 @@
     </ul>
     <form action="/view" method="POST">
       {% csrf_token %}
-        <input type="text" name="search" placeholder="project tags">
-        <button type="submit" class="btn btn-primary">Search</button>
+        <input type="text" name="search" placeholder="Type TagName">
+        <button type="submit" class="btn btn-warning">Search</button>
     </form>
 </nav>
