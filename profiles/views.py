@@ -13,6 +13,7 @@ from django.contrib.auth import authenticate
 
 
 # Create your views here.
+
 def index(request):
     u_data = Profile.objects.filter(user_id=request.session['id'])
     context = {
@@ -20,7 +21,7 @@ def index(request):
     }
     return render(request, 'profiles/index.html', context)
 
-
+@login_required()
 def projects(request):
     u_data = Profile.objects.filter(user_id=request.session['id'])
     p_data = Project.objects.filter(user_id=request.session['id'])

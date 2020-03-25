@@ -36,8 +36,7 @@ def signin(request):
 
 def logout_user(request):
     logout(request)
-    return redirect("/project")
-
+    return redirect('#')
 
 def forget_password_view(request):
     return render(request,"auth/forgetPassword.html")
