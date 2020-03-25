@@ -36,7 +36,7 @@ def signin(request):
 
 def logout_user(request):
     logout(request)
-    return redirect("/project")
+    return redirect("/login_register/login")
 
 
 def forget_password_view(request):

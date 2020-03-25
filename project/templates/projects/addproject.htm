@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container">
-    <h2 style="text-align: center;margin-top: 10px;margin-bottom: 10px;color: firebrick;">Add Your Own Project</h2>
+    <h2 style="text-align: center;margin-top: 10px;margin-bottom: 10px;color: #ffb813;">Add Your Own Project</h2>
     <form class="col-8 offset-2" method="POST" enctype="multipart/form-data" >
         <!-- is for protection against Cross Site Request Forgeries. -->
         {% csrf_token %} 
@@ -61,7 +61,7 @@
             <span style="font-weight: bold;color: tomato;">* Please Upload A Valid Picture</span>
             {% endif %}
           </div>
-        <input type="submit" value="Add Project" class="btn btn-success">
+        <input type="submit" value="Add Project" class="btn btn-warning">
         {% if messages %}
                 {% for message in messages %}
                     <div class="p-3 mb-2 bg-info text-white" style="margin-top: 20px; border-radius: 5%;text-align: center;">{{message}}</div>

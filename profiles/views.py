@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate
 
 # from .forms import UserForm
 
-
+"""
 # Create your views here.
 def index(request):
     u_data = Profile.objects.filter(user_id=request.session['id'])
@@ -19,8 +19,7 @@ def index(request):
         'u_data': u_data
     }
     return render(request, 'profiles/index.html', context)
-
-
+"""
 def projects(request):
     u_data = Profile.objects.filter(user_id=request.session['id'])
     p_data = Project.objects.filter(user_id=request.session['id'])
