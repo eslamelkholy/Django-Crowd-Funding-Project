@@ -82,10 +82,18 @@ def listProject(request,id):
     similers=get_similer_projects(id)
     #project images
     project_images=get_project_images(id)
+    #owner check
+    owner=0
+    try:
+        if user_project.user.id==request.session['id']:
+            owner+=1
+    except:
+        owner=0
+
     if user_project:
         return render(request,"projects/projectPage.htm",
                 {"project" : user_project,"comments" : comments,"images":project_images, "ratings":
-                    ratings_counter,"similars":similers,"username":username,"user_img":user_img})
+                    ratings_counter,"similars":similers,"username":username,"user_img":user_img,"owner":owner})
     else:
         return HttpResponse("404 Not Found")
 

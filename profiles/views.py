@@ -12,8 +12,8 @@ from django.contrib.auth import authenticate
 
 @login_required()
 def projects(request):
-    u_data = Profile.objects.filter(user_id=request.session['id'])
     p_data = Project.objects.filter(user_id=request.session['id'])
+    u_data = Profile.objects.filter(user_id=request.session['id'])
     context = {
         'u_data': u_data,
         'p_data': p_data
