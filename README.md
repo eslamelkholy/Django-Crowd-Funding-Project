@@ -35,4 +35,4 @@ tags
 
 
 ### -Project Images
-![](project/public/static/image/onlinePayment.jpg)
+![](project/static/image/onlinePayment.jpg)
