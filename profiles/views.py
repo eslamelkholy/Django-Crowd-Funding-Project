@@ -1,28 +1,19 @@
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from project.models import Project, Donation
 from django.contrib.auth.models import User
 from user.models import Profile
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm
+from .forms import UserForm,ProfileForm
 from django.core.exceptions import PermissionDenied
-
-# from .forms import UserForm
-
-
-# Create your views here.
-def index(request):
-    u_data = Profile.objects.filter(id=request.session['id'])
-    context = {
-        'u_data': u_data
-    }
-    return render(request, 'profiles/index.html', context)
+from django.contrib.auth import authenticate
 
 
+@login_required()
 def projects(request):
-    u_data = Profile.objects.filter(id=request.session['id'])
     p_data = Project.objects.filter(user_id=request.session['id'])
+    u_data = Profile.objects.filter(user_id=request.session['id'])
     context = {
         'u_data': u_data,
         'p_data': p_data
@@ -31,7 +22,7 @@ def projects(request):
 
 @login_required()
 def donations(request):
-    u_data = Profile.objects.filter(id=request.session['id'])
+    u_data = Profile.objects.filter(user_id=request.session['id'])
     p_data = Project.objects.filter(user_id=request.session['id'])
     d_data = Donation.objects.filter(user_id=request.session['id'])
     context = {
@@ -43,52 +34,68 @@ def donations(request):
 
 @login_required()
 def edit(request):
-    print("request",request)
     u_data = Profile.objects.filter(user_id=request.session['id'])
     if request.method == "POST":
-        print(request.POST)
-        form = UserForm(request.POST,request.FILES)
-        if form.is_valid():
-            for data in u_data:
-                myid = request.session['id']
-                data.user.first_name = request.POST['fname']
-                data.user.last_name = request.POST['lname']
-                data.user.password = request.POST['password']
-                data.phone = request.POST['phone']
-                data.birthdate = request.POST['birthdate']
-                data.fbprofile = request.POST['fbprofile']
-                data.country = request.POST['country']
-                user_img = request.FILES.getlist('user_img')[0]
-                fs = FileSystemStorage()
-                filename = fs.save(user_img.name, user_img)
-                data.user_img=filename
-                data.save()
+        u_form = UserForm(request.POST)
+        p_form = ProfileForm(request.POST,request.FILES)
+        if u_form.is_valid() and p_form.is_valid():
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            phone = request.POST['phone']
+            birthdate = request.POST['birthdate']
+            fbprofile = request.POST['fbprofile']
+            country = request.POST['country']
+            user_img = request.FILES.getlist('user_img')[0]
+            fs = FileSystemStorage()
+            filename = fs.save(user_img.name, user_img)
+
+            Profile.objects.filter(user_id=request.session['id']).update(
+                phone=phone,
+                fbprofile=fbprofile,
+                country=country,
+                birthdate=birthdate,
+                user_img=filename
+            )
+            User.objects.filter(id=request.session['id']).update(
+                first_name=first_name,
+                last_name=last_name,
+
+            )
+            return redirect('index')
         else:
             print("erorr")
 
     else:
-        form = UserForm()
+        obj1 = User.objects.get(pk=request.session['id'])
+        obj2 = Profile.objects.get(user_id=request.session['id'])
+        u_form = UserForm(instance=obj1)
+        p_form = ProfileForm(instance=obj2)
 
-    p_data = Project.objects.filter(p_id=request.session['id'])
+    p_data = Project.objects.filter(user_id=request.session['id'])
     d_data = Donation.objects.filter(user_id=request.session['id'])
 
     context = {
         'u_data': u_data,
         'p_data': p_data,
         'd_data': d_data,
-        'form': form,
+        'u_form': u_form,
+        'p_form':p_form,
     }
     return render(request, 'profiles/edit.html', context)
 
 
 def delete(request):
-    u_data = Profile.objects.filter(id=request.session['id'])
+    u_data = Profile.objects.filter(user_id=request.session['id'])
     p_data = Project.objects.filter(user_id=request.session['id'])
     d_data = Donation.objects.filter(user_id=request.session['id'])
-    if request.method == 'GET' and 'id' in request.GET:
-        if request.user.is_authenticated():
+
+    if request.method == 'GET' and 'password' in request.GET:
+        out = authenticate(request, username=request.GET['name'], password=request.GET['password'])
+        if out is not None:
             try:
-                Profile.objects.get(id=request.session['id']).delete()
+                Profile.objects.get(user_id=request.session['id']).delete()
+                User.objects.get(pk=request.session['id']).delete()
+
             except:
                 return JsonResponse({"deleted":False})
             else:
