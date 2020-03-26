@@ -1,2 +1,9 @@
+{% extends 'auth/base.html' %}
+{% block title%}Activation Success {%endblock title %}
+{% block content %}
 <h1>Congratulation</h1>
-{% csrf_token %}
+<p>We will redirect to home page after seconds</p>
+<script>
+    setTimeout(function(){window.location.href="http://localhost:8000/project"},6000);
+</script>
+{%endblock content%}

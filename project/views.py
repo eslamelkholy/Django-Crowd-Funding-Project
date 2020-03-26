@@ -23,6 +23,7 @@ stripe.api_key = "sk_test_BfzJ6A79Q955Tt2DaVGrGKS900BMCGkffo"
 from .models import Project,Images,Report,Rating
 from category.models import Category
 from comments.models import Comments
+from user.models import Profile
 from django.views.decorators.csrf import csrf_exempt
 
 # to get the similar projects based on tags
@@ -50,7 +51,7 @@ def rate_projects(id,this_user_id):
         user_rating=0
     ratings_counter={rate.rate: len(ratings.filter(rate=rate.rate)) for rate in ratings}
     ratings_counter['count']=len(ratings)
-    ratings_counter['avg']=ratings.aggregate(Avg('rate'))['rate__avg']
+    ratings_counter['avg']=round(ratings.aggregate(Avg('rate'))['rate__avg'],2)
     ratings_counter['thisRate']=user_rating
     return ratings_counter
 
@@ -63,6 +64,13 @@ def get_project_images(id):
 
 # List Specified Project
 def listProject(request,id):
+    try:
+        user_profile=Profile.objects.get(user_id=request.session['id'])
+        username=user_profile.user.username
+        user_img="image/"+str(user_profile.user_img)
+    except:
+        username="Go to your profile"
+        user_img="image/user-profile-flat-icons (1).jpg"
     user_project = Project.objects.filter(p_id = int(id)).first()
     comments = Comments.objects.filter(project_id = int(id))
     # rating projects
@@ -74,9 +82,18 @@ def listProject(request,id):
     similers=get_similer_projects(id)
     #project images
     project_images=get_project_images(id)
+    #owner check
+    owner=0
+    try:
+        if user_project.user.id==request.session['id']:
+            owner+=1
+    except:
+        owner=0
+
     if user_project:
         return render(request,"projects/projectPage.htm",
-                {"project" : user_project,"comments" : comments,"images":project_images, "ratings": ratings_counter,"similars":similers})
+                {"project" : user_project,"comments" : comments,"images":project_images, "ratings":
+                    ratings_counter,"similars":similers,"username":username,"user_img":user_img,"owner":owner})
     else:
         return HttpResponse("404 Not Found")
 
@@ -138,6 +155,13 @@ def reportProject(request):
 
 # Project Home Page
 def project(request):
+    try:
+        user_profile=Profile.objects.get(user_id=request.session['id'])
+        username=user_profile.user.username
+        user_img="image/"+str(user_profile.user_img)
+    except:
+        username="Go to your profile"
+        user_img="image/user-profile-flat-icons (1).jpg"
     projects = Project.objects.all()
     ProjectRate=Rating.objects.annotate(avg=Avg('rate')).order_by('-rate')[:5]
     lastProject = Project.objects.order_by('p_id')[:5]
@@ -149,6 +173,8 @@ def project(request):
         "featureProjects":featureProjects,
         "lastProject": lastProject,
         "categories": categories,
+        "username":username,
+        "user_img":user_img
     }
     return render(request, "projects/projectHome.html", context)
 
@@ -222,7 +248,6 @@ def payment_process(request):
 
 def rate_project(request):
     if request.user.is_authenticated:
-        print("authenticated!!!!!!!!!!!!!!!!!!!!!!!!")
         if request.method== 'POST':
             p_id=int(request.POST['project_id'])
             u_id=int(request.session['id'])
@@ -263,7 +288,6 @@ def cancel_project(request):
                 return JsonResponse({"error":"error"})
     else:
         raise PermissionDenied
-
 
 # Search
 def search(request):

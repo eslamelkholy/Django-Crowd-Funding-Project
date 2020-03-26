@@ -62,8 +62,9 @@
                     <a class="btn btn-success donate" id="donateBtn" href="/project/{{ project.title.split|join:'-' }}">Donate Now</a>
                    
                 </div>
-                
+                {%if owner%}
                 {%include "projects/cancelProject.html"%}
+                {%endif%}
                 <!-- Report Project Modal -->
                 <div style="color: black;" class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
