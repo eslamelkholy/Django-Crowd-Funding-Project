@@ -46,7 +46,7 @@ projects
 
 ### -Project Images
 ![](project/static/image/onlinePayment.jpg)
-![](project/static/image/Slider.jpg)
-![](project/static/image/Last_and_Feature_Projects.jpg)
-![](project/static/image/View_Projects.jpg)
+![](project/static/image/Slider.jpeg)
+![](project/static/image/Last_and_Feature_Projects.jepg)
+![](project/static/image/View_Projects.jpeg)
 
