@@ -45,7 +45,13 @@ projects
 
 
 ### -Project Images
+<pre>
+- Payment Page
+</pre>
 ![](project/static/image/onlinePayment.jpg)
+<pre>
+- Home Page
+</pre>
 ![](project/static/image/Slider.jpeg)
 ![](project/static/image/Last_and_Feature_Projects.jpeg)
 ![](project/static/image/View_Projects.jpeg)
